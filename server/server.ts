@@ -1,20 +1,33 @@
 import express from "express";
 import dotenv from "dotenv";
+import routes from "./routers/baseRouter";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 const port = 5000;
 
 dotenv.config();
 
-var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
-var spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+const spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
+const spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+
+if (!spotify_client_id || !spotify_client_secret) {
+  throw new Error(`Cannot read Spotify creds from ENV`);
+}
+
+export const creds = {
+  spotify_client_id,
+  spotify_client_secret,
+};
 
 var app = express();
 
-app.get("/auth/login", (req, res) => {});
+app.use(`/api`, routes);
 
-app.get("/auth/callback", (req, res) => {});
+// Check that server is running
+app.use(`/healthcheck`, (_, res) => {
+  res.json({ status: StatusCodes.OK, message: ReasonPhrases.OK });
+});
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
-  console.log(`spotify stuff`, { spotify_client_id, spotify_client_secret });
 });
