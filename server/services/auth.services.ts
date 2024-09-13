@@ -1,3 +1,7 @@
+import spotifyClient from "../clients/spotifyClient";
+
+let accessToken: unknown;
+
 /**
  * Recommended by Spotify documentation:
  *      https://developer.spotify.com/documentation/web-playback-sdk/howtos/web-app-player
@@ -33,4 +37,37 @@ export const authorize = (): string => {
     "https://accounts.spotify.com/authorize/?" +
     auth_query_parameters.toString()
   );
+};
+
+interface SpotifyCallbackProps {
+  code: string;
+}
+
+export const spotifyCallback = async ({
+  code,
+}: SpotifyCallbackProps): Promise<unknown> => {
+  if (!code) {
+    throw new Error(`No code to exchange`);
+  }
+
+  const { data } = await spotifyClient({
+    method: "post",
+    url: `/api/token`,
+    data: {
+      code,
+      redirect_url: `http://localhost:3000/auth/callback`,
+      grant_type: `authorization_code`,
+    },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  accessToken = data;
+
+  return;
+};
+
+export const getAccessToken = (): unknown => {
+  return accessToken as unknown;
 };
