@@ -1,26 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import * as authService from "../services/auth.services";
 
-export const athenticateToSpotify = async (
+export const login = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<unknown> => {
   try {
-    const data = authService.authorize();
+    const data = authService.login();
     res.redirect(data);
   } catch (error: unknown) {
     return next(error);
   }
 };
 
-export const spotifyCallback = async (
+export const callback = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<unknown> => {
   try {
-    await authService.spotifyCallback({
+    await authService.callback({
       code: (req.query.code as string) || "",
     });
 
@@ -30,13 +30,13 @@ export const spotifyCallback = async (
   }
 };
 
-export const getAccessToken = async (
+export const token = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<unknown> => {
   try {
-    const data = authService.getAccessToken();
+    const data = authService.token();
 
     res.json(data);
   } catch (error: unknown) {
