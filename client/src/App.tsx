@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import WebPlayback from './components/WebPlayback';
+import Login from './components/Login'
 import './App.css';
+import { getAuthToken } from './api';
 
 function App() {
+
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+
+    async function getToken() {
+      // const response = await fetch('/auth/token');
+      const response = await getAuthToken();
+      // const json = await response.json();
+      setToken((response as { access_token: string}).access_token);
+    }
+
+    getToken();
+
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+        { (!token) ? <Login/> : <WebPlayback token={token} /> }
+    </>
   );
 }
 

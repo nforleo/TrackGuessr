@@ -3,7 +3,8 @@ import * as authController from "../controllers/auth.controller";
 
 const router = express.Router();
 
-router.route(`/login`).get(authController.athenticateToSpotify);
-router.route(`/callback`).post();
+router.route(`/login`).get(authController.login);
+router.route(`/callback`).get(authController.callback);
+router.route(`/token`).get(authController.token)
 
 export default router;

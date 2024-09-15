@@ -1,6 +1,9 @@
-import spotifyClient from "../clients/spotifyClient";
+import qs from "qs";
+import { spotify_client_id, spotify_client_secret } from "../server";
+import axios from "axios";
 
 let accessToken: unknown;
+const redirect_uri = 'http://localhost:3000/auth/callback';
 
 /**
  * Recommended by Spotify documentation:
@@ -19,17 +22,22 @@ const generateRandomString = function (length: number) {
   return text;
 };
 
-export const authorize = (): string => {
+/**
+ * Redirect user to the Spotify Login page
+ * @returns authorization URL
+ */
+export const login = (): string => {
+  if (!spotify_client_id) {
+    throw new Error(`login error: no client id`);
+  }
   const scope = "streaming user-read-email user-read-private";
-
   const state = generateRandomString(16);
 
   const auth_query_parameters = new URLSearchParams({
     response_type: "code",
-    // client_id: spotify_client_id,
-    client_id: "76f6ea062e5f4ac897b0e25269ee3bc4",
+    client_id: spotify_client_id,
     scope: scope,
-    redirect_uri: "http://localhost:3000/auth/callback",
+    redirect_uri,
     state: state,
   });
 
@@ -42,24 +50,28 @@ export const authorize = (): string => {
 interface SpotifyCallbackProps {
   code: string;
 }
-
-export const spotifyCallback = async ({
+/**
+ * Get the access token from spotify for the logged in user
+ * @param param0 Authroization code returned from Spotify
+ * @returns nothing, but defines access code
+ */
+export const callback = async ({
   code,
 }: SpotifyCallbackProps): Promise<unknown> => {
   if (!code) {
     throw new Error(`No code to exchange`);
   }
 
-  const { data } = await spotifyClient({
-    method: "post",
-    url: `/api/token`,
-    data: {
+  const form = {
       code,
-      redirect_url: `http://localhost:3000/auth/callback`,
+      redirect_uri,
       grant_type: `authorization_code`,
-    },
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+    };
+
+  const {data} = await axios.post('https://accounts.spotify.com/api/token', qs.stringify(form), {
+  headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + (Buffer.from(spotify_client_id + ':' + spotify_client_secret).toString('base64'))
     },
   });
 
@@ -68,6 +80,10 @@ export const spotifyCallback = async ({
   return;
 };
 
-export const getAccessToken = (): unknown => {
+/**
+ * Fetch access token that was generated
+ * @returns access token
+ */
+export const token = (): unknown => {
   return accessToken as unknown;
 };
