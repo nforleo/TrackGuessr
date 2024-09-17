@@ -5,12 +5,10 @@ import { Button, Stack } from "react-bootstrap";
 import { logout } from "../api";
 
 interface HomeInterface {
-    token: string
     setToken: (str: string) => void;
 }
 
 function Home({
-  token,
   setToken
 }: HomeInterface) {
     const _logout = () => {

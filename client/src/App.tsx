@@ -26,7 +26,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-        { (!token) ? <LandingPage/> : <Home token={token} setToken={setToken}/> }
+        { (!token) ? <LandingPage/> : <Home setToken={setToken}/> }
       </BrowserRouter>
     </div>
   );
