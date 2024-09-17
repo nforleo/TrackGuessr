@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import WebPlayback from './components/WebPlayback';
-import Login from './components/Login'
+import { BrowserRouter } from 'react-router-dom';
+import Home from './components/Home';
+import LandingPage from './components/LandingPage'
 import './App.css';
 import { getAuthToken } from './api';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Header} from './components/Header';
 
 function App() {
 
@@ -11,9 +14,7 @@ function App() {
   useEffect(() => {
 
     async function getToken() {
-      // const response = await fetch('/auth/token');
       const response = await getAuthToken();
-      // const json = await response.json();
       setToken((response as { access_token: string}).access_token);
     }
 
@@ -22,9 +23,12 @@ function App() {
   }, []);
 
   return (
-    <>
-        { (!token) ? <Login/> : <WebPlayback token={token} /> }
-    </>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        { (!token) ? <LandingPage/> : <Home token={token} setToken={setToken}/> }
+      </BrowserRouter>
+    </div>
   );
 }
 
