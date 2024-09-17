@@ -16,7 +16,6 @@ describe("Spotify Authentication", () => {
     // Call the function that performs Spotify authentication
     await callback({ code: "mock_code" });
 
-    // Assertions
     expect(axios.post).toHaveBeenCalledWith(
       "https://accounts.spotify.com/api/token",
       expect.any(String),
@@ -25,6 +24,7 @@ describe("Spotify Authentication", () => {
   });
 
   test("it should return an empty access token", () => {
+    // Call function that returns token
     const myToken = token();
 
     expect(myToken).toBe(undefined);
