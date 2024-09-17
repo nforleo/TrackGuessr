@@ -39,6 +39,7 @@ export const login = (): string => {
     scope: scope,
     redirect_uri,
     state: state,
+    show_dialog: 'true'
   });
 
   return (
@@ -89,6 +90,6 @@ export const token = (): unknown => {
 };
 
 export const logout = (): unknown => {
-  accessToken = undefined;
+  accessToken = {};
   return;
 }
