@@ -87,3 +87,8 @@ export const callback = async ({
 export const token = (): unknown => {
   return accessToken as unknown;
 };
+
+export const logout = (): unknown => {
+  accessToken = undefined;
+  return;
+}

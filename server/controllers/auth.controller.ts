@@ -43,3 +43,14 @@ export const token = async (
     return next(error);
   }
 };
+
+export const logout = async (req: Request,
+  res: Response, next: NextFunction
+): Promise<unknown> => {
+  try {
+    authService.logout();
+    return res.json();
+  } catch (error: unknown) {
+    return next(error);
+  }
+}
