@@ -1,5 +1,4 @@
-import { Stack } from 'react-bootstrap';
-import '../assets/index.css';
+import '../../assets/index.css';
 
 
 function LandingPage() {

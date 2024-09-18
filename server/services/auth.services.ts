@@ -60,7 +60,7 @@ export const callback = async ({
   code,
 }: SpotifyCallbackProps): Promise<unknown> => {
   if (!code) {
-    throw new Error(`No code to exchange`);
+    return;
   }
 
   const form = {

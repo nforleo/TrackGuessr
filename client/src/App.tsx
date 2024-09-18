@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Home from './components/Home';
-import LandingPage from './components/LandingPage'
+import { useState, useEffect } from 'react';
+import Home from './components/Home/Home';
+import LandingPage from './components/Home/LandingPage'
 import './App.css';
 import { getAuthToken } from './api';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,12 +22,10 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <BrowserRouter>
+      <div>
         <Header />
         { (!token) ? <LandingPage/> : <Home setToken={setToken}/> }
-      </BrowserRouter>
-    </div>
+      </div>
   );
 }
 
