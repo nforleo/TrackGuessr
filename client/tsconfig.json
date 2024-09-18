@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -21,7 +22,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
-  ],
-  "exclude": ["node_modules"]
+    "src",
+    "__tests__" ],
+  "exclude": ["node_modules"],
 }
