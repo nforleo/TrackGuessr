@@ -21,7 +21,7 @@ export const Draggable = ({
 
   
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes} data-testid={`unrevealed-track-card`}>
         <Card>
             <Card.Body>
                 Draggable {id}
