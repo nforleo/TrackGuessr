@@ -1,8 +1,8 @@
-import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Card } from 'react-bootstrap';
+import { BackCard } from './BackCard';
 import { TrackCard } from '../../models/TrackCard';
+import { Card } from 'react-bootstrap';
 
 interface SortableItemProps {
     track: TrackCard;
@@ -27,15 +27,15 @@ export const SortableItem = ({
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card>
-        <Card.Body className='d-flex flex-column'>
-          <span>
-            {track.id}
-          </span>
-          {!track.revealed && <span>
-            Back of Card</span>}
-        </Card.Body>
-      </Card>
+      {track.revealed ? (
+        <Card>
+          <Card.Body className='d-flex flex-column'>
+            <span>
+              {track.year}
+            </span>
+          </Card.Body>
+        </Card>
+      ) : (<BackCard track={track}/>)}
     </div>
   );
 }
