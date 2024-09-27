@@ -1,12 +1,14 @@
 import { closestCenter, DndContext, DragEndEvent, DragStartEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { Droppable } from './Droppable';
 import { Draggable } from './Draggable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './assets/styles.module.css';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { arrayMove, horizontalListSortingStrategy, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
+import { useAtomValue } from 'jotai';
+import { UserAtom } from '../../atoms/UserAtom';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -88,6 +90,42 @@ export const Gameboard = ({
     title: 'Endless Roads',
   },
 ]);
+    const user = useAtomValue(UserAtom);
+    const [player, setPlayer] = useState<Spotify.Player | undefined>();
+
+    useEffect(() => {
+        if (user && !document.getElementById('my-spotify-player')) {
+            console.log('Gameborad - user', user);
+            const script = document.createElement("script");
+            script.src = "https://sdk.scdn.co/spotify-player.js";
+            script.async = true;
+            script.id = 'my-spotify-player'
+
+            
+            document.body.appendChild(script);
+
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                const player = new Spotify.Player({
+                    name: 'TrackGssr',
+                    getOAuthToken: cb => { cb(user?.token || ''); },
+                    volume: 0.5
+                });
+
+                setPlayer(player);
+
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                });
+
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
+
+
+                player.connect();
+        };
+    }
+    }, [user]);
 
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
@@ -122,7 +160,25 @@ export const Gameboard = ({
                             </div>
                         </Col>
                     </Row>
-                    <Row className='h-50'>
+                    {/* <Row className='h-50'> */}
+                    <Row className='flex-row'>
+                        <Button style={{ width: 'min-content', whiteSpace: 'nowrap'}}>
+                            Confirm Guess
+                        </Button>
+                        <ButtonGroup style={{ width: 'min-content' }}>
+                            <Button onClick={() => {
+                                player?.togglePlay()
+                            }}>
+                                Play
+                            </Button>
+                            <Button  onClick={() => {
+                                player?.togglePlay()
+                            }}>
+                                Pause
+                            </Button>
+                        </ButtonGroup>
+                    </Row>
+                    <Row>
                         <Col className={`${styles.answerSection}`}>
                                <SortableContext items={revealedList} strategy={horizontalListSortingStrategy} id='droppable-area'>
                                     {revealedList.map((track) => (
