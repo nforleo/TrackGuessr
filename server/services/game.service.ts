@@ -104,3 +104,28 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
 export const getDailyTracks = async (): Promise<Track[]> => {
   return dailyCache.getDailyTrack();
 };
+
+export const playSong = async (uri: string): Promise<void> => {
+  if (!uri) {
+    throw new Error(`No URI provided`);
+  }
+
+  const accessToken = token();
+
+  if (!accessToken) {
+    throw new Error(`Application not Authenticated`);
+  }
+
+  await axios.put(
+    `https://api.spotify.com/v1/me/player/play`,
+    {
+      uris: [uri],
+      position_ms: 0,
+    },
+    {
+      headers: {
+        Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+      },
+    },
+  );
+};
