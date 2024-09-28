@@ -1,8 +1,9 @@
 import qs from "qs";
 import { spotify_client_id, spotify_client_secret } from "../server";
 import axios from "axios";
+import { AccessToken } from "../models/AccessToken";
 
-let accessToken: unknown;
+let accessToken: AccessToken;
 const redirect_uri = 'http://localhost:3000/auth/callback';
 
 /**
@@ -85,11 +86,11 @@ export const callback = async ({
  * Fetch access token that was generated
  * @returns access token
  */
-export const token = (): unknown => {
-  return accessToken as unknown;
+export const token = (): AccessToken => {
+  return accessToken;
 };
 
-export const logout = (): unknown => {
-  accessToken = {};
+export const logout = (): void => {
+  accessToken = {} as AccessToken;
   return;
 }
