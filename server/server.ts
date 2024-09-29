@@ -24,6 +24,8 @@ app.use('/game', gameRouter)
 /**
  * Listen to defined port 
  */
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`)
+  });
+}

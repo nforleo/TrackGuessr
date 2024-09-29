@@ -36,8 +36,13 @@ export const formatTracksForFrontEnd = (
  */
 export const selectNRandomTracks = (
   playlist: TracksResponse,
-  n = 10, // Default to 10 (number needed for Daily game mode)
+  n?: number,
 ): Track[] => {
+  if (n === undefined) {
+    // Default to 10 (number needed for Daily game mode)
+    n = 10;
+  }
+
   // Add 1 to n since we will need a track card to start with
   n = n + 1;
 
@@ -79,12 +84,13 @@ export const selectNRandomTracks = (
  * Get the tracks to be used for the Daily or Custom game
  */
 export const getNTracks = async (n: number): Promise<Track[]> => {
+  console.log("getNTracks n", n);
   const accessToken = token();
 
   if (!accessToken) {
     throw new Error(`Application not Authenticated`);
   }
-
+  console.log("getNTracks got token, calling get request");
   const { data } = await axios.get(
     `https://api.spotify.com/v1/playlists/${TRACKGSSR_PLAYLIST_ID}`,
     {
