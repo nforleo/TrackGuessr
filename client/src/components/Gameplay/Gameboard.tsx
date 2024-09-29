@@ -106,8 +106,7 @@ export const Gameboard = ({
                     <Row className='h-50'>
                         <Col>
                             <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
-                                {/* {activeId === null && <Draggable id="Item 1" />} */}
-                                {unrevealedList.length > 0 && <Draggable id={unrevealedList[0].id} />}
+                                {unrevealedList.length > 0 && <Draggable track={unrevealedList[0]} />}
                             </div>
                         </Col>
                     </Row>

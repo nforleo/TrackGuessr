@@ -1,18 +1,18 @@
 import React, { ReactNode } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import { Card } from 'react-bootstrap';
+import { TrackCard } from '../../models/TrackCard';
+import { BackCard } from './BackCard';
 
 interface DraggableProps {
-    // children: ReactNode,
-    id: string
+    track: TrackCard,
 };
 
 export const Draggable = ({
-    // children,
-    id
+    track,
 }: DraggableProps) => {
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id,
+    id: track.id,
   });
 
   const style = transform ? {
@@ -21,12 +21,13 @@ export const Draggable = ({
 
   
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes} data-testid={`unrevealed-track-card`}>
-        <Card>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes} data-testid={`track-card-unrevealed-${track.id}`}>
+        {/* <Card>
             <Card.Body>
                 Draggable {id}
             </Card.Body>
-        </Card>
+        </Card> */}
+        <BackCard track={track} />
     </div>
   );
 }

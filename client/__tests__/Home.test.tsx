@@ -3,22 +3,47 @@
  */
 import '@testing-library/jest-dom';
 import Home from '../src/components/Home/Home';
-import { cleanup, screen, render } from '@testing-library/react';
+import { cleanup, screen, render, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { Gameboard } from '../src/components/Gameplay/Gameboard';
 import { Stats } from '../src/components/Stats/Stats';
+import * as api from '../src/api';
+import { act } from 'react';
 
 afterAll(cleanup);
 
+jest.mock('axios');
+
 describe('Check that Home screen is rendered correctly', () => {
+    jest.spyOn(api, 'getAuthToken').mockResolvedValue({
+        access_token: 'access_token'
+    });
+
+      jest.spyOn(api, 'getDailyTracks').mockResolvedValue([
+            {
+                id: "track_id",
+                revealed: false,
+                year: 1999,
+                artist: "artist_name",
+                title: "track_name",
+                album: "album_name",
+            }, {
+                id: "track_id",
+                revealed: false,
+                year: 1999,
+                artist: "artist_name",
+                title: "track_name",
+                album: "album_name",
+            }
+        ]);
     /**
      * Test that the Daily Button loads correctly on the
      *  Home Screen
      */
     test('renders a button with the text "Daily"', () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter><Home setToken={setToken} /></MemoryRouter>);
+        const setUser = jest.fn();
+        render(<MemoryRouter><Home setUser={setUser} /></MemoryRouter>);
         const dailyButton = screen.getByText('Daily');
         expect(dailyButton).toBeInTheDocument();
     });
@@ -28,8 +53,8 @@ describe('Check that Home screen is rendered correctly', () => {
      *  Home Screen
      */
     test('renders a button with the text "Custom"', () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter><Home setToken={setToken} /></MemoryRouter>);
+        const setUser = jest.fn();
+        render(<MemoryRouter><Home setUser={setUser} /></MemoryRouter>);
         const customButton = screen.getByText('Custom');
         expect(customButton).toBeInTheDocument();
     });
@@ -39,8 +64,8 @@ describe('Check that Home screen is rendered correctly', () => {
      *  Home Screen
      */
     test('renders a button with the text "Stats"', () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter><Home setToken={setToken} /></MemoryRouter>);
+        const setUser = jest.fn();
+        render(<MemoryRouter><Home setUser={setUser} /></MemoryRouter>);
         const statsButton = screen.getByText('Stats');
         expect(statsButton).toBeInTheDocument();
     });
@@ -50,8 +75,8 @@ describe('Check that Home screen is rendered correctly', () => {
      *  Home Screen
      */
     test('renders a button with the text "Log Out"', () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter><Home setToken={setToken} /></MemoryRouter>);
+        const setUser = jest.fn();
+        render(<MemoryRouter><Home setUser={setUser} /></MemoryRouter>);
         const logOutButton = screen.getByText('Log Out');
         expect(logOutButton).toBeInTheDocument();
     });
@@ -60,35 +85,44 @@ describe('Check that Home screen is rendered correctly', () => {
 
 describe("Verify Home screen button functions", () => {
     test("The daily gameboard is rendered", async () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter>
+        const setUser = jest.fn();
+        act(() => {
+            render(<MemoryRouter>
                 <Routes>
-                    <Route path="" element={<Home setToken={setToken} />} />
+                    <Route path="" element={<Home setUser={setUser} />} />
                     <Route path="/daily" element={<Gameboard mode='daily' />} />
                 </Routes>
             </MemoryRouter>);
+        })
 
-        // Simulate a click on the Link in Home
-        const linkElement = screen.getByRole('link', { name: /Daily/i });
-        userEvent.click(linkElement);
-
+        act(() => {
+            // Simulate a click on the Link in Home
+            const linkElement = screen.getByRole('link', { name: /Daily/i });
+            userEvent.click(linkElement);
+        });
+            
         // Verify if the target page is loaded by checking for the specific element
         const targetDiv = await screen.findByTestId('gameboard-daily');
         expect(targetDiv).toBeInTheDocument();
     });
 
     test("The custom gameboard is rendered", async () => {
-        const setToken = jest.fn();
-        render(<MemoryRouter>
+        const setUser = jest.fn();
+
+        act(() => {
+            render(<MemoryRouter>
                 <Routes>
-                    <Route path="" element={<Home setToken={setToken} />} />
+                    <Route path="" element={<Home setUser={setUser} />} />
                     <Route path="/custom" element={<Gameboard mode='custom' />} />
                 </Routes>
             </MemoryRouter>);
+        });
 
-        // Simulate a click on the Link in Home
-        const linkElement = screen.getByRole('link', { name: /Custom/i });
-        userEvent.click(linkElement);
+        act(() => {
+            // Simulate a click on the Link in Home
+            const linkElement = screen.getByRole('link', { name: /Custom/i });
+            userEvent.click(linkElement);
+        });
 
         // Verify if the target page is loaded by checking for the specific element
         const targetDiv = await screen.findByTestId('gameboard-custom');
@@ -96,10 +130,10 @@ describe("Verify Home screen button functions", () => {
     });
 
     test("The stats screen is rendered", async () => {
-        const setToken = jest.fn();
+        const setUser = jest.fn();
         render(<MemoryRouter>
                 <Routes>
-                    <Route path="" element={<Home setToken={setToken} />} />
+                    <Route path="" element={<Home setUser={setUser} />} />
                     <Route path="/stats" element={<Stats />} />
                 </Routes>
             </MemoryRouter>);

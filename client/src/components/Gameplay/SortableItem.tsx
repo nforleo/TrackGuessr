@@ -16,17 +16,12 @@ export const SortableItem = ({
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        // padding: '8px',
-        // margin: '4px 0',
-        // background: '#f0f0f0',
-        // border: '1px solid #ccc',
-        // borderRadius: '4px',
         height: 'min-content',
         width: '200px'
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} data-testid={`track-card-revealed-${track.id}`}>
       {track.revealed ? (
         <Card>
           <Card.Body className='d-flex flex-column'>

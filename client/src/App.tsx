@@ -17,9 +17,6 @@ function App({
   setUser,
 }: AppProps) {
   const user = useAtomValue(UserAtom);
-
-  console.log('App - user', user);
-
   return (
       <div>
         <Header />
