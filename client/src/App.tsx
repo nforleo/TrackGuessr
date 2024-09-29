@@ -5,26 +5,22 @@ import './App.css';
 import { getAuthToken } from './api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Header} from './components/Header';
+import { useAtomValue } from 'jotai';
+import { UserAtom } from './atoms/UserAtom';
+import { User } from './models/User';
 
-function App() {
+interface AppProps {
+  setUser: (user: User | null) => void;
+}
 
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-
-    async function getToken() {
-      const response = await getAuthToken();
-      setToken((response as { access_token: string}).access_token);
-    }
-
-    getToken();
-
-  }, []);
-
+function App({
+  setUser,
+}: AppProps) {
+  const user = useAtomValue(UserAtom);
   return (
       <div>
         <Header />
-        { (!token) ? <LandingPage/> : <Home setToken={setToken}/> }
+        { (!user?.token) ? <LandingPage/> : <Home setUser={setUser}/> }
       </div>
   );
 }

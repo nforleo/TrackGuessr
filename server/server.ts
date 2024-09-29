@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./routers/authRouter";
+import gameRouter from './routers/gameRouter';
 
 const port = 5000;
 
@@ -17,10 +18,14 @@ if (!spotify_client_id || !spotify_client_secret) {
 // Route requests through router
 const app = express();
 app.use('/auth', authRouter);
+app.use('/game', gameRouter)
+
 
 /**
  * Listen to defined port 
  */
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`)
+  });
+}

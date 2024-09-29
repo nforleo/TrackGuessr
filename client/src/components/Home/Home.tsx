@@ -2,17 +2,18 @@
 import { Button, Stack } from "react-bootstrap";
 import { logout } from "../../api";
 import { Link } from "react-router-dom";
+import { User } from "../../models/User";
 
 interface HomeInterface {
-    setToken: (str: string) => void;
+    setUser: (user: User | null) => void;
 }
 
 function Home({
-  setToken
+  setUser
 }: HomeInterface) {
     const _logout = () => {
       logout();
-      setToken('');
+      setUser(null);
     }
    return (
       <Stack gap={3} direction="vertical">
