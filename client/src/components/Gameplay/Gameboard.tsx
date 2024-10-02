@@ -104,6 +104,7 @@ export const Gameboard = ({
     }
 
     const submitGuess = (): void => {
+        // Reveal Card Order
         setRevealedList((prevItems) => 
             prevItems.map((item) =>
                 item.id === currentSong?.id
@@ -111,6 +112,11 @@ export const Gameboard = ({
                     : item
             )
         )
+
+        // Remove current song so the next one can be played
+        setCurrentSong(undefined);
+        // We can allow the next card to be moved into the gameplay area
+        setUnrevealedCardInList(false);
     }
 
     const readyForNextTrack = (): boolean => {
