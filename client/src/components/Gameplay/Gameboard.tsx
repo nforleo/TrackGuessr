@@ -23,6 +23,7 @@ export const Gameboard = ({
     const [unrevealedList, setUnrevealedList] = useState<TrackCard[]>([]);
     const [player, setPlayer] = useState<Spotify.Player | undefined>();
     const [currentSong, setCurrentSong] = useState<TrackCard | undefined>();
+    const [unrevealedCardInList, setUnrevealedCardInList] = useState<boolean>(false);
 
     useEffect(() => {
         getDailyTracks().then((tracks) => {
@@ -89,6 +90,9 @@ export const Gameboard = ({
                 // Handle adding draggable the item to the sortable list
                 setRevealedList((prevItems) => [...prevItems, unrevealedList[0]]);
                 setUnrevealedList(unrevealedList.slice(1));
+
+                // Manage when we have guess in the revealed list but have not submitted
+                setUnrevealedCardInList(true);
             }
         }
     }
@@ -99,6 +103,24 @@ export const Gameboard = ({
         playSong(track.id);
     }
 
+    const submitGuess = (): void => {
+        setRevealedList((prevItems) => 
+            prevItems.map((item) =>
+                item.id === currentSong?.id
+                    ? {...item, revealed: true}
+                    : item
+            )
+        )
+    }
+
+    const readyForNextTrack = (): boolean => {
+        return !currentSong || unrevealedCardInList;
+    }
+
+    useEffect(() => {
+        console.log('currentSong and currentSong.revealed', {currentSong: !currentSong, revealed: !currentSong?.revealed})
+    }, [JSON.stringify(currentSong)]);
+
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {revealedList.length > 0 && unrevealedList.length > 0 ? <Container className='pt-2 h-100'>
@@ -106,19 +128,23 @@ export const Gameboard = ({
                     <Row className='h-50'>
                         <Col>
                             <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
-                                {unrevealedList.length > 0 && <Draggable track={unrevealedList[0]} />}
+                                {unrevealedList.length > 0 && <Draggable disableCard={readyForNextTrack()} track={unrevealedList[0]} />}
                             </div>
                         </Col>
                     </Row>
                     {/* <Row className='h-50'> */}
                     <Row className='flex-row'>
-                        <Button style={{ width: 'min-content', whiteSpace: 'nowrap'}}>
+                        <Button style={{ width: 'min-content', whiteSpace: 'nowrap'}}
+                            disabled={!unrevealedCardInList}
+                            onClick={submitGuess}
+                        >
                             Confirm Guess
                         </Button>
                         <Button className='ms-2' style={{ width: 'min-content', whiteSpace: 'nowrap' }}
                             onClick={() => {
                                 playNextSong();
                             }}
+                            disabled={!!currentSong}
                         >
                             Start Song
                         </Button>
