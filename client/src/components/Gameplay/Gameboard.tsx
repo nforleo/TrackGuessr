@@ -32,7 +32,7 @@ export const Gameboard = ({
             if (!first) {
                 console.error(`Not enough elements`);
             } else {
-                console.log('Setting the 2 lists...');
+                // console.log('Setting the 2 lists...');
                 first.revealed = true;
                 setRevealedList([first]);
                 setUnrevealedList(tracks);
@@ -98,6 +98,7 @@ export const Gameboard = ({
     }
 
     const playNextSong = (): void => {
+        console.log('Calling play next song');
         const track = unrevealedList[0];
         setCurrentSong(track);
         playSong(track.id);
@@ -123,9 +124,9 @@ export const Gameboard = ({
         return !currentSong || unrevealedCardInList;
     }
 
-    useEffect(() => {
-        console.log('currentSong and currentSong.revealed', {currentSong: !currentSong, revealed: !currentSong?.revealed})
-    }, [JSON.stringify(currentSong)]);
+    // useEffect(() => {
+    //     console.log('currentSong and currentSong.revealed', {currentSong: !currentSong, revealed: !currentSong?.revealed})
+    // }, [JSON.stringify(currentSong)]);
 
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
@@ -147,9 +148,7 @@ export const Gameboard = ({
                             Confirm Guess
                         </Button>
                         <Button className='ms-2' style={{ width: 'min-content', whiteSpace: 'nowrap' }}
-                            onClick={() => {
-                                playNextSong();
-                            }}
+                            onClick={playNextSong}
                             disabled={!!currentSong}
                         >
                             Start Song
