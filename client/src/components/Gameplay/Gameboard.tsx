@@ -27,7 +27,6 @@ export const Gameboard = ({
 
     useEffect(() => {
         getDailyTracks().then((tracks) => {
-            console.log('Tracks', tracks);
             const first = tracks.shift();
             if (!first) {
                 console.error(`Not enough elements`);
