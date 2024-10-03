@@ -75,27 +75,6 @@ export const Gameboard = ({
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
 
-        console.log('ACTIVE', active); 
-
-        if (over && over.data.current?.sortable.containerId === 'droppable-area') {
-            if (active.data.current?.sortable.containerId === 'droppable-area') {
-                // Already in the list, now reorder
-                setRevealedList((tracks) => {
-                    const oldIndex = tracks.findIndex((track) => track.id === active.id);
-                    const newIndex = tracks.findIndex((track) => track.id === over.id);
-                    return arrayMove(tracks, oldIndex, newIndex);
-                });
-            } else {
-                // Handle adding draggable the item to the sortable list
-                setRevealedList((prevItems) => [...prevItems, unrevealedList[0]]);
-                setUnrevealedList(unrevealedList.slice(1));
-
-                // Manage when we have guess in the revealed list but have not submitted
-                setUnrevealedCardInList(true);
-            }
-        }
-    }
-
     const playNextSong = (): void => {
         console.log('Calling play next song');
         const track = unrevealedList[0];
