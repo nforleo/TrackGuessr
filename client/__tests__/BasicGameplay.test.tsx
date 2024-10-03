@@ -98,5 +98,36 @@ describe('The Game should handle all cards existing in different states', () => 
         fireEvent.click(pauseButton);
         expect(pauseButton).toBeInTheDocument();
     })
+
+     test("should be a Play Button", async () => {
+
+        jest.spyOn(api, "getDailyTracks").mockResolvedValue([
+            {
+                id: "track_id",
+                revealed: false,
+                year: 1999,
+                artist: "artist_name",
+                title: "track_name",
+                album: "album_name",
+            }, {
+                id: "track_id",
+                revealed: false,
+                year: 1999,
+                artist: "artist_name",
+                title: "track_name",
+                album: "album_name",
+            }
+        ]);
+
+        act(() => {
+            render(<MemoryRouter>
+                <Gameboard mode='daily' />
+            </MemoryRouter>);
+        })
+
+        const playButton =  await screen.findByText('Play');
+        fireEvent.click(playButton);
+        expect(playButton).toBeInTheDocument();
+    })
 });
 

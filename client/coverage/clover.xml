@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1727921691785" clover="3.2.0">
-  <project timestamp="1727921691785" name="All files">
-    <metrics statements="117" coveredstatements="77" conditionals="60" coveredconditionals="21" methods="30" coveredmethods="13" elements="207" coveredelements="111" complexity="0" loc="117" ncloc="117" packages="4" files="7" classes="7"/>
+<coverage generated="1727922409564" clover="3.2.0">
+  <project timestamp="1727922409564" name="All files">
+    <metrics statements="117" coveredstatements="78" conditionals="60" coveredconditionals="24" methods="30" coveredmethods="14" elements="207" coveredelements="116" complexity="0" loc="117" ncloc="117" packages="4" files="7" classes="7"/>
     <package name="src">
       <metrics statements="11" coveredstatements="6" conditionals="4" coveredconditionals="1" methods="4" coveredmethods="1"/>
       <file name="api.ts" path="/Users/nforleo/capstone/TrackGuessr/client/src/api.ts">
@@ -28,13 +28,13 @@
       </file>
     </package>
     <package name="src.components.Gameplay">
-      <metrics statements="94" coveredstatements="62" conditionals="50" coveredconditionals="15" methods="24" coveredmethods="11"/>
+      <metrics statements="94" coveredstatements="63" conditionals="50" coveredconditionals="18" methods="24" coveredmethods="12"/>
       <file name="BackCard.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Gameplay/BackCard.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
       <file name="Draggable.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Gameplay/Draggable.tsx">
         <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
@@ -42,15 +42,15 @@
         <line num="2" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
-        <line num="19" count="3" type="stmt"/>
-        <line num="29" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="34" count="3" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="29" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="4" type="stmt"/>
       </file>
       <file name="Gameboard.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Gameplay/Gameboard.tsx">
-        <metrics statements="71" coveredstatements="39" conditionals="46" coveredconditionals="13" methods="21" coveredmethods="8"/>
+        <metrics statements="71" coveredstatements="40" conditionals="46" coveredconditionals="16" methods="21" coveredmethods="9"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -62,23 +62,23 @@
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
-        <line num="19" count="7" type="stmt"/>
-        <line num="21" count="7" type="stmt"/>
-        <line num="22" count="7" type="stmt"/>
-        <line num="23" count="7" type="stmt"/>
-        <line num="24" count="7" type="stmt"/>
-        <line num="25" count="7" type="stmt"/>
-        <line num="26" count="7" type="stmt"/>
-        <line num="28" count="7" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="31" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="10" type="stmt"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="stmt"/>
+        <line num="24" count="10" type="stmt"/>
+        <line num="25" count="10" type="stmt"/>
+        <line num="26" count="10" type="stmt"/>
+        <line num="28" count="10" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="31" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="32" count="0" type="stmt"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="37" count="2" type="stmt"/>
-        <line num="42" count="7" type="stmt"/>
-        <line num="43" count="2" type="cond" truecount="1" falsecount="2"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="42" count="10" type="stmt"/>
+        <line num="43" count="3" type="cond" truecount="1" falsecount="2"/>
         <line num="44" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
@@ -93,7 +93,7 @@
         <line num="65" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="75" count="7" type="stmt"/>
+        <line num="75" count="10" type="stmt"/>
         <line num="76" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
         <line num="80" count="0" type="cond" truecount="0" falsecount="7"/>
@@ -105,23 +105,23 @@
         <line num="90" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
-        <line num="99" count="7" type="stmt"/>
+        <line num="99" count="10" type="stmt"/>
         <line num="100" count="1" type="stmt"/>
         <line num="101" count="1" type="stmt"/>
         <line num="102" count="1" type="stmt"/>
         <line num="103" count="1" type="stmt"/>
-        <line num="106" count="7" type="stmt"/>
+        <line num="106" count="10" type="stmt"/>
         <line num="108" count="0" type="stmt"/>
         <line num="109" count="0" type="stmt"/>
         <line num="110" count="0" type="cond" truecount="0" falsecount="6"/>
         <line num="117" count="0" type="stmt"/>
         <line num="119" count="0" type="stmt"/>
-        <line num="122" count="7" type="stmt"/>
-        <line num="123" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="130" count="7" type="stmt"/>
-        <line num="157" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="122" count="10" type="stmt"/>
+        <line num="123" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="130" count="10" type="stmt"/>
+        <line num="157" count="1" type="cond" truecount="3" falsecount="1"/>
         <line num="162" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="171" count="3" type="stmt"/>
+        <line num="171" count="4" type="stmt"/>
       </file>
       <file name="SortableItem.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Gameplay/SortableItem.tsx">
         <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
@@ -130,10 +130,10 @@
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="16" count="3" type="stmt"/>
-        <line num="23" count="3" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Gameplay.assets">
@@ -144,8 +144,8 @@
         <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
         <line num="4" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="10" count="3" type="stmt"/>
+        <line num="9" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="4" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
