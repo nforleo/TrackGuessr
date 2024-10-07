@@ -3,7 +3,7 @@ import { Droppable } from './Droppable';
 import { Draggable } from './Draggable';
 import { useEffect, useState } from 'react';
 import styles from './assets/styles.module.css';
-import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Col, Container, Row, Stack } from 'react-bootstrap';
 import { arrayMove, horizontalListSortingStrategy, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
@@ -24,6 +24,7 @@ export const Gameboard = ({
     const [player, setPlayer] = useState<Spotify.Player | undefined>();
     const [currentSong, setCurrentSong] = useState<TrackCard | undefined>();
     const [unrevealedCardInList, setUnrevealedCardInList] = useState<boolean>(false);
+    const [isIncorrectGuess, setIsIncorrectGuess] = useState<boolean>(false);
 
     useEffect(() => {
         getDailyTracks().then((tracks) => {
@@ -100,6 +101,20 @@ export const Gameboard = ({
         playSong(track.id);
     }
 
+    const checkForIncorrectGuess = (array: TrackCard[]) => {
+        return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
+    }
+
+    const resetAndRemoveWrongCard = () => {
+        const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
+        setRevealedList(removedIncorrectGuess);
+        setIsIncorrectGuess(false);
+        // Remove current song so the next one can be played
+        setCurrentSong(undefined);
+        // We can allow the next card to be moved into the gameplay area
+        setUnrevealedCardInList(false);
+    }
+
     const submitGuess = (): void => {
         // Reveal Card Order
         setRevealedList((prevItems) => 
@@ -110,14 +125,24 @@ export const Gameboard = ({
             )
         )
 
-        // Remove current song so the next one can be played
-        setCurrentSong(undefined);
-        // We can allow the next card to be moved into the gameplay area
-        setUnrevealedCardInList(false);
+
+        setIsIncorrectGuess(checkForIncorrectGuess(revealedList));
+        const isGuessCorrect = !checkForIncorrectGuess(revealedList);
+        if (isGuessCorrect) {
+            // Remove current song so the next one can be played
+            setCurrentSong(undefined);
+            // We can allow the next card to be moved into the gameplay area
+            setUnrevealedCardInList(false);
+        }
     }
 
-    const readyForNextTrack = (): boolean => {
+    const disableNextTrack = (): boolean => {
+        console.log('Drag unrevealed?',{ noPlayingSong: !currentSong});
         return !currentSong || unrevealedCardInList;
+    }
+
+    const disableStartSongButton = (): boolean => {
+        return !!currentSong || isIncorrectGuess;
     }
 
     // useEffect(() => {
@@ -131,8 +156,18 @@ export const Gameboard = ({
                     <Row className='h-50'>
                         <Col>
                             <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
-                                {unrevealedList.length > 0 && <Draggable disableCard={readyForNextTrack()} track={unrevealedList[0]} />}
+                                {unrevealedList.length > 0 && <Draggable disableCard={disableNextTrack()} track={unrevealedList[0]} />}
                             </div>
+                            {isIncorrectGuess && 
+                                <Stack style={{ width: 'min-content', margin: 'auto' }}>
+                                    <span style={{ whiteSpace: 'nowrap' }}>
+                                        {`Sorry, your guess was incorrect :(`}
+                                    </span>
+                                    <Button variant='warning' onClick={resetAndRemoveWrongCard}>
+                                        Continue
+                                    </Button>
+                                </Stack>
+                            }
                         </Col>
                     </Row>
                     {/* <Row className='h-50'> */}
@@ -145,7 +180,7 @@ export const Gameboard = ({
                         </Button>
                         <Button className='ms-2' style={{ width: 'min-content', whiteSpace: 'nowrap' }}
                             onClick={playNextSong}
-                            disabled={!!currentSong}
+                            disabled={disableStartSongButton()}
                         >
                             Start Song
                         </Button>

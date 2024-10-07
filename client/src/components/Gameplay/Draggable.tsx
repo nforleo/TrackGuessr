@@ -18,7 +18,8 @@ export const Draggable = ({
 
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
     id: track.id,
-    disabled: isDisabled
+    // disabled: isDisabled
+    disabled: disableCard
   });
 
   // useEffect(() => {
