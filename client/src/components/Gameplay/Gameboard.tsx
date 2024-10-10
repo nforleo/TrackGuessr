@@ -10,6 +10,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
+import { playNextSong, submitGuess } from './utils/logic';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -39,7 +40,6 @@ export const Gameboard = ({
             if (!first) {
                 console.error(`Not enough elements`);
             } else {
-                // console.log('Setting the 2 lists...');
                 first.revealed = true;
                 setRevealedList([first]);
                 setUnrevealedList(tracks);
@@ -101,13 +101,6 @@ export const Gameboard = ({
         }
     }
 
-    const playNextSong = (): void => {
-        console.log('Calling play next song');
-        const track = unrevealedList[0];
-        setCurrentSong(track);
-        playSong(track.id);
-    }
-
     const checkForIncorrectGuess = (array: TrackCard[]) => {
         return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
     }
@@ -138,26 +131,6 @@ export const Gameboard = ({
             });
             // Show Attributes Modal
             setShowAttributesModal(true);
-    }
-
-
-    const submitGuess = (): void => {
-        // Reveal Card Order
-        setRevealedList((prevItems) => 
-            prevItems.map((item) =>
-                item.id === currentSong?.id
-                    ? {...item, revealed: true}
-                    : item
-            )
-        )
-
-
-        const isGuessCorrect = !checkForIncorrectGuess(revealedList);
-        setIsIncorrectGuess(!isGuessCorrect);
-        
-        if (isGuessCorrect) {
-            processCorrectGuess();
-        }
     }
 
     const disableNextTrack = (): boolean => {
@@ -204,16 +177,22 @@ export const Gameboard = ({
                             }
                         </Col>
                     </Row>
-                    {/* <Row className='h-50'> */}
                     <Row className='flex-row'>
                         <Button style={{ width: 'min-content', whiteSpace: 'nowrap'}}
                             disabled={!unrevealedCardInList}
-                            onClick={submitGuess}
+                            onClick={() => submitGuess(
+                                setRevealedList,
+                                currentSong || {} as TrackCard,
+                                checkForIncorrectGuess,
+                                revealedList,
+                                setIsIncorrectGuess,
+                                processCorrectGuess
+                            )}
                         >
                             Confirm Guess
                         </Button>
                         <Button className='ms-2' style={{ width: 'min-content', whiteSpace: 'nowrap' }}
-                            onClick={playNextSong}
+                            onClick={() => playNextSong(unrevealedList[0], setCurrentSong, playSong)}
                             disabled={disableStartSongButton()}
                         >
                             Start Song
