@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { playNextSong, submitGuess } from './utils/logic';
+import { checkForIncorrectGuess, playNextSong, submitGuess } from './utils/logic';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -101,9 +101,9 @@ export const Gameboard = ({
         }
     }
 
-    const checkForIncorrectGuess = (array: TrackCard[]) => {
-        return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
-    }
+    // const checkForIncorrectGuess = (array: TrackCard[]) => {
+    //     return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
+    // }
 
     const resetAndRemoveWrongCard = () => {
         const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
@@ -183,7 +183,6 @@ export const Gameboard = ({
                             onClick={() => submitGuess(
                                 setRevealedList,
                                 currentSong || {} as TrackCard,
-                                checkForIncorrectGuess,
                                 revealedList,
                                 setIsIncorrectGuess,
                                 processCorrectGuess

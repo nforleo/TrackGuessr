@@ -76,7 +76,6 @@ describe('Verify basic guessing functionality', () => {
             title: "track_name",
             album: "album_name",
         };
-        const mockCheckForIncorrectGuess = jest.fn();
         const mockRevealedList = [{
             id: "track_id",
             revealed: true,
@@ -114,7 +113,6 @@ describe('Verify basic guessing functionality', () => {
         logic.submitGuess(
             mockSetRevealedList,
             mockCurrentSong,
-            mockCheckForIncorrectGuess,
             mockRevealedList,
             mockSetIsIncorrectGuess,
             mockProcessCorrectGuess
@@ -185,7 +183,6 @@ describe('Verify basic guessing functionality', () => {
         logic.submitGuess(
             mockSetRevealedList,
             mockCurrentSong,
-            mockCheckForIncorrectGuess,
             mockRevealedList,
             mockSetIsIncorrectGuess,
             mockProcessCorrectGuess

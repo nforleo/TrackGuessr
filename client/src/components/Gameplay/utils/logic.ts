@@ -5,6 +5,10 @@ export const playNextSong = (track: TrackCard, setCurrentSong: (t: TrackCard) =>
     playSong(track.id);
 }
 
+export const checkForIncorrectGuess = (array: TrackCard[]) => {
+    return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
+}
+
 /**
  * Reveal all cards in list.
  * @param currentSong 
@@ -20,7 +24,6 @@ export const setRevealedListCallback = (prevItems: TrackCard[], currentSong: Tra
 export const submitGuess = (
     setRevealedList: (prevItems: (t: TrackCard[]) => TrackCard[]) => void,
     currentSong: TrackCard,
-    checkForIncorrectGuess: (t: TrackCard[]) => boolean,
     revealedList: TrackCard[],
     setIsIncorrectGuess: (b: boolean) => void,
     processCorrectGuess: () => void
