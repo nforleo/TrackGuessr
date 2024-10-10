@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.88% </span>
+                <span class="strong">59.22% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>62/109</span>
+                <span class='fraction'>61/103</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.41% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>14/53</span>
+                <span class='fraction'>14/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">36% </span>
+                <span class="strong">37.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/25</span>
+                <span class='fraction'>9/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.32% </span>
+                <span class="strong">54.32% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>45/86</span>
+                <span class='fraction'>44/81</span>
             </div>
         
             
@@ -287,7 +287,12 @@
 <a name='L222'></a><a href='#L222'>222</a>
 <a name='L223'></a><a href='#L223'>223</a>
 <a name='L224'></a><a href='#L224'>224</a>
-<a name='L225'></a><a href='#L225'>225</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -394,14 +399,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
@@ -452,6 +453,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -523,7 +533,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { checkForIncorrectGuess, playNextSong, submitGuess } from './utils/logic';
+import { playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
 &nbsp;
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -614,19 +624,15 @@ export const Gameboard = ({
         }
     }
 &nbsp;
-    // const checkForIncorrectGuess = (array: TrackCard[]) =&gt; {
-    //     return array.some((card, i) =&gt; array[i + 1] &amp;&amp; (card.year || -1) &gt; (array[i + 1].year || -1));
+    // const resetAndRemoveWrongCard = () =&gt; {
+    //     const removedIncorrectGuess = revealedList.filter((track) =&gt; track.id !== currentSong?.id);
+    //     setRevealedList(removedIncorrectGuess);
+    //     setIsIncorrectGuess(undefined);
+    //     // Remove current song so the next one can be played
+    //     setCurrentSong(undefined);
+    //     // We can allow the next card to be moved into the gameplay area
+    //     setUnrevealedCardInList(false);
     // }
-&nbsp;
-    const resetAndRemoveWrongCard = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
-        const removedIncorrectGuess = <span class="cstat-no" title="statement not covered" >revealedList.filter(<span class="fstat-no" title="function not covered" >(t</span>rack) =&gt; <span class="cstat-no" title="statement not covered" >track.id !== currentSong?.id);</span></span>
-<span class="cstat-no" title="statement not covered" >        setRevealedList(removedIncorrectGuess);</span>
-<span class="cstat-no" title="statement not covered" >        setIsIncorrectGuess(undefined);</span>
-        // Remove current song so the next one can be played
-<span class="cstat-no" title="statement not covered" >        setCurrentSong(undefined);</span>
-        // We can allow the next card to be moved into the gameplay area
-<span class="cstat-no" title="statement not covered" >        setUnrevealedCardInList(false);</span>
-    }
 &nbsp;
     const processCorrectGuess = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
             // Remove current song so the next one can be played
@@ -683,7 +689,16 @@ export const Gameboard = ({
                                     &lt;span style={{ whiteSpace: 'nowrap' }}&gt;
                                         {`Sorry, your guess was incorrect :(`}
                                     &lt;/span&gt;
-                                    &lt;Button variant='warning' onClick={resetAndRemoveWrongCard}&gt;
+                                    &lt;Button variant='warning' onClick={<span class="fstat-no" title="function not covered" >() =&gt;</span>
+<span class="cstat-no" title="statement not covered" >                                        resetAndRemoveWrongCard(</span>
+                                            revealedList,
+                                            currentSong,
+                                            setRevealedList,
+                                            setIsIncorrectGuess,
+                                            setCurrentSong,
+                                            setUnrevealedCardInList
+                                        )
+                                    }&gt;
                                         Continue
                                     &lt;/Button&gt;
                                 &lt;/Stack&gt;
@@ -742,7 +757,7 @@ export const Gameboard = ({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-10T11:03:30.137Z
+                at 2024-10-10T11:17:20.533Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -67,16 +67,7 @@ describe('Verify basic guessing functionality', () => {
                 <Gameboard mode='daily' />
         </MemoryRouter>);
 
-        const mockSetRevealedList = jest.fn();
-        const mockCurrentSong = {
-            id: "track_id",
-            revealed: false,
-            year: 1999,
-            artist: "artist_name",
-            title: "track_name",
-            album: "album_name",
-        };
-        const mockRevealedList = [{
+        const badGuess = [{
             id: "track_id",
             revealed: true,
             year: 1999,
@@ -91,29 +82,41 @@ describe('Verify basic guessing functionality', () => {
             title: "track_name",
             album: "album_name",
         }];
+
+        const mockSetRevealedList = jest.fn();
+        const mockCurrentSong = {
+            id: "track_id2",
+            revealed: false,
+            year: 1999,
+            artist: "artist_name",
+            title: "track_name",
+            album: "album_name",
+        };
         const mockSetIsIncorrectGuess = jest.fn();
         const mockProcessCorrectGuess = jest.fn();
 
         logic.setRevealedListCallback([{
-                id: "track_id",
+                id: "track_id1",
                 revealed: true,
                 year: 1999,
                 artist: "artist_name",
                 title: "track_name",
                 album: "album_name",
             }, {
-                id: "track_id",
+                id: "track_id2",
                 revealed: false,
                 year: 1980,
                 artist: "artist_name",
                 title: "track_name",
                 album: "album_name",
             }], mockCurrentSong);
+        const mockSetCurrentSong = jest.fn();
+        const mockSetUnRevealedCardInList = jest.fn();
 
         logic.submitGuess(
             mockSetRevealedList,
             mockCurrentSong,
-            mockRevealedList,
+            badGuess,
             mockSetIsIncorrectGuess,
             mockProcessCorrectGuess
         )
@@ -129,6 +132,15 @@ describe('Verify basic guessing functionality', () => {
         const confirmButton = await screen.findByText(/confirm guess/i)
         expect(confirmButton).toBeInTheDocument();
         fireEvent.click(confirmButton);
+
+        logic.resetAndRemoveWrongCard(
+            badGuess, 
+            mockCurrentSong, 
+            mockSetRevealedList, 
+            mockSetIsIncorrectGuess, 
+            mockSetCurrentSong,
+            mockSetUnRevealedCardInList
+        )
     });
 
     test('an correct guess is correct', async () => {
@@ -145,7 +157,6 @@ describe('Verify basic guessing functionality', () => {
             title: "track_name",
             album: "album_name",
         };
-        const mockCheckForIncorrectGuess = jest.fn();
         const mockRevealedList = [{
             id: "track_id",
             revealed: true,
@@ -189,8 +200,6 @@ describe('Verify basic guessing functionality', () => {
         )
         
         expect(await screen.findByText(/score/i)).toBeInTheDocument();
-
-        
 
         const startSongButton = await screen.findByText(/start song/i);
         expect(startSongButton).toBeInTheDocument();

@@ -39,3 +39,20 @@ export const submitGuess = (
         processCorrectGuess();
     }
 }
+
+export const resetAndRemoveWrongCard = (
+    revealedList: TrackCard[], 
+    currentSong: TrackCard | undefined,
+    setRevealedList: (t: TrackCard[]) => void,
+    setIsIncorrectGuess: (v: boolean | undefined) => void,
+    setCurrentSong: (t: TrackCard | undefined) => void,
+    setUnrevealedCardInList: (v: boolean) => void
+) => {
+    const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
+    setRevealedList(removedIncorrectGuess);
+    setIsIncorrectGuess(undefined);
+    // Remove current song so the next one can be played
+    setCurrentSong(undefined);
+    // We can allow the next card to be moved into the gameplay area
+    setUnrevealedCardInList(false);
+}
