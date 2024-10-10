@@ -1,15 +1,15 @@
-import { closestCenter, DndContext, DragEndEvent, DragStartEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { Droppable } from './Droppable';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { Draggable } from './Draggable';
 import { useEffect, useState } from 'react';
 import styles from './assets/styles.module.css';
 import { Button, ButtonGroup, Col, Container, Row, Stack } from 'react-bootstrap';
-import { arrayMove, horizontalListSortingStrategy, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
 import { useAtomValue } from 'jotai';
-import { UserAtom } from '../../atoms/UserAtom';
+import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
+import { UserStats } from '../../models/UserStats';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -24,7 +24,14 @@ export const Gameboard = ({
     const [player, setPlayer] = useState<Spotify.Player | undefined>();
     const [currentSong, setCurrentSong] = useState<TrackCard | undefined>();
     const [unrevealedCardInList, setUnrevealedCardInList] = useState<boolean>(false);
-    const [isIncorrectGuess, setIsIncorrectGuess] = useState<boolean>(false);
+    const [isIncorrectGuess, setIsIncorrectGuess] = useState<boolean | undefined>();
+    const [stats, setStats] = useState<UserStats>({
+        score: 0,
+        mistakes: 0,
+        time: "na"
+    });
+    const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
+
 
     useEffect(() => {
         getDailyTracks().then((tracks) => {
@@ -108,12 +115,31 @@ export const Gameboard = ({
     const resetAndRemoveWrongCard = () => {
         const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
         setRevealedList(removedIncorrectGuess);
-        setIsIncorrectGuess(false);
+        setIsIncorrectGuess(undefined);
         // Remove current song so the next one can be played
         setCurrentSong(undefined);
         // We can allow the next card to be moved into the gameplay area
         setUnrevealedCardInList(false);
     }
+
+    const processCorrectGuess = () => {
+            // Remove current song so the next one can be played
+            setCurrentSong(undefined);
+            // We can allow the next card to be moved into the gameplay area
+            setUnrevealedCardInList(false);
+            // Make the gameplay area green for 5 seconds
+            setTimeout(() => {
+                setIsIncorrectGuess(undefined);
+            }, 5000);
+            // Increment score by 2
+            setStats({
+                ...stats,
+                score: stats.score + 2
+            });
+            // Show Attributes Modal
+            setShowAttributesModal(true);
+    }
+
 
     const submitGuess = (): void => {
         // Reveal Card Order
@@ -126,34 +152,42 @@ export const Gameboard = ({
         )
 
 
-        setIsIncorrectGuess(checkForIncorrectGuess(revealedList));
         const isGuessCorrect = !checkForIncorrectGuess(revealedList);
+        setIsIncorrectGuess(!isGuessCorrect);
+        
         if (isGuessCorrect) {
-            // Remove current song so the next one can be played
-            setCurrentSong(undefined);
-            // We can allow the next card to be moved into the gameplay area
-            setUnrevealedCardInList(false);
+            processCorrectGuess();
         }
     }
 
     const disableNextTrack = (): boolean => {
-        console.log('Drag unrevealed?',{ noPlayingSong: !currentSong});
         return !currentSong || unrevealedCardInList;
     }
 
-    const disableStartSongButton = (): boolean => {
-        return !!currentSong || isIncorrectGuess;
+    const getGameplayBackgroundColor = (): string => {
+        if (isIncorrectGuess) {
+            return 'incorrectBackground';
+        } else if (isIncorrectGuess === false) {
+            return 'correctBackground';
+        }
+
+        return 'defaultBackground';
     }
 
-    // useEffect(() => {
-    //     console.log('currentSong and currentSong.revealed', {currentSong: !currentSong, revealed: !currentSong?.revealed})
-    // }, [JSON.stringify(currentSong)]);
+    const disableStartSongButton = (): boolean => {
+        return !!currentSong || !!isIncorrectGuess;
+    }
 
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {revealedList.length > 0 && unrevealedList.length > 0 ? <Container className='pt-2 h-100'>
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
+                        <Col md={2}>
+                            <span>
+                                Score: {stats.score}
+                            </span>
+                        </Col>
                         <Col>
                             <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
                                 {unrevealedList.length > 0 && <Draggable disableCard={disableNextTrack()} track={unrevealedList[0]} />}
@@ -198,7 +232,7 @@ export const Gameboard = ({
                         </ButtonGroup>
                     </Row>
                     <Row>
-                        <Col className={`${styles.answerSection}`}>
+                        <Col className={`${styles.answerSection} ${styles[getGameplayBackgroundColor()]}`}>
                                <SortableContext items={revealedList} strategy={horizontalListSortingStrategy} id='droppable-area'>
                                     {revealedList.map((track) => (
                                         <SortableItem key={track.id} track={track} />
