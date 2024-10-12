@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { playNextSong, submitGuess } from './utils/logic';
+import { playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -101,19 +101,15 @@ export const Gameboard = ({
         }
     }
 
-    const checkForIncorrectGuess = (array: TrackCard[]) => {
-        return array.some((card, i) => array[i + 1] && (card.year || -1) > (array[i + 1].year || -1));
-    }
-
-    const resetAndRemoveWrongCard = () => {
-        const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
-        setRevealedList(removedIncorrectGuess);
-        setIsIncorrectGuess(undefined);
-        // Remove current song so the next one can be played
-        setCurrentSong(undefined);
-        // We can allow the next card to be moved into the gameplay area
-        setUnrevealedCardInList(false);
-    }
+    // const resetAndRemoveWrongCard = () => {
+    //     const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
+    //     setRevealedList(removedIncorrectGuess);
+    //     setIsIncorrectGuess(undefined);
+    //     // Remove current song so the next one can be played
+    //     setCurrentSong(undefined);
+    //     // We can allow the next card to be moved into the gameplay area
+    //     setUnrevealedCardInList(false);
+    // }
 
     const processCorrectGuess = () => {
             // Remove current song so the next one can be played
@@ -170,7 +166,16 @@ export const Gameboard = ({
                                     <span style={{ whiteSpace: 'nowrap' }}>
                                         {`Sorry, your guess was incorrect :(`}
                                     </span>
-                                    <Button variant='warning' onClick={resetAndRemoveWrongCard}>
+                                    <Button variant='warning' onClick={() =>
+                                        resetAndRemoveWrongCard(
+                                            revealedList,
+                                            currentSong,
+                                            setRevealedList,
+                                            setIsIncorrectGuess,
+                                            setCurrentSong,
+                                            setUnrevealedCardInList
+                                        )
+                                    }>
                                         Continue
                                     </Button>
                                 </Stack>
@@ -183,7 +188,6 @@ export const Gameboard = ({
                             onClick={() => submitGuess(
                                 setRevealedList,
                                 currentSong || {} as TrackCard,
-                                checkForIncorrectGuess,
                                 revealedList,
                                 setIsIncorrectGuess,
                                 processCorrectGuess
