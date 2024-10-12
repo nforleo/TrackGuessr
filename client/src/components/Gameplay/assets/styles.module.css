@@ -1,5 +1,16 @@
 .answerSection {
     display: flex;
     padding: 2em;
+}
+
+.defaultBackground {
     background-color: #e0e0e0;
+}
+
+.correctBackground {
+    background-color: #85e085;
+}
+
+.incorrectBackground {
+    background-color: #f35f5fa2;
 }
