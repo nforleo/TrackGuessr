@@ -11,6 +11,7 @@ import { UserAtom } from '../../atoms/UserAtom';
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
 import { playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import { GuessAttributesModal } from './GuessAttributesModal';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -150,6 +151,7 @@ export const Gameboard = ({
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {revealedList.length > 0 && unrevealedList.length > 0 ? <Container className='pt-2 h-100'>
+                {showAttributeModal && <GuessAttributesModal setShow={setShowAttributesModal} show={showAttributeModal} />}
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
                         <Col md={2}>

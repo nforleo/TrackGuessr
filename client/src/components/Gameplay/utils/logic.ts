@@ -1,3 +1,4 @@
+import { Attributes } from "../../../models/Attributes";
 import { TrackCard } from "../../../models/TrackCard";
 
 export const playNextSong = (track: TrackCard, setCurrentSong: (t: TrackCard) => void, playSong: (id: string) => void): void => {
@@ -55,4 +56,11 @@ export const resetAndRemoveWrongCard = (
     setCurrentSong(undefined);
     // We can allow the next card to be moved into the gameplay area
     setUnrevealedCardInList(false);
+}
+
+export const validateAttributeGuess = (
+    currentSong: TrackCard | undefined,
+    attributes: Attributes
+) => {
+    
 }
