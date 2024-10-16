@@ -8,9 +8,9 @@
 }
 
 .correctBackground {
-    background-color: #85e085;
+    background-color: #85e085 !important;
 }
 
 .incorrectBackground {
-    background-color: #f35f5fa2;
+    background-color: #f35f5fa2 !important;
 }
