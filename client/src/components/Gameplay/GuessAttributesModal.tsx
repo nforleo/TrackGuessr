@@ -1,23 +1,28 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button, Form, InputGroup, Modal, Stack } from "react-bootstrap"
 import { Attributes } from "../../models/Attributes";
 import { validateAttributeGuess } from "./utils/logic";
 import { TrackCard } from "../../models/TrackCard";
 import { Guesses } from "../../models/ValidatedGuesses";
 import styles from './assets/styles.module.css';
+import { UserStats } from "../../models/UserStats";
 
 interface GuessAttributesModalProps {
     show: boolean;
     setShow: (b: boolean) => void;
     currentSong: TrackCard | undefined;
     setCurrentSong: (t: TrackCard | undefined) => void;
+    setStats: (s: UserStats) => void;
+    stats: UserStats
 }
 
 export const GuessAttributesModal = ({
     show,
     setShow,
     currentSong,
-    setCurrentSong
+    setCurrentSong,
+    setStats,
+    stats
 }: GuessAttributesModalProps): JSX.Element => {
 
     const [checkedGuesses, setCheckedGuesses] = useState<Guesses>({} as Guesses);
@@ -119,7 +124,9 @@ export const GuessAttributesModal = ({
                         attributes,
                         setIsSubmitted,
                         setCurrentSong,
-                        setCheckedGuesses
+                        setCheckedGuesses,
+                        setStats,
+                        stats
                     )
                 }}
             >

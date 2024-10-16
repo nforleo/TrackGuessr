@@ -96,7 +96,9 @@ export const validateAttributeGuess = (
     attributes: Attributes,
     setIsSubmitted: (b: boolean) => void,
     setCurrentSong: (s: TrackCard | undefined) => void,
-    setCheckedGuesses: (g: Guesses) => void
+    setCheckedGuesses: (g: Guesses) => void,
+    setStats: (s: UserStats) => void,
+    stats: UserStats
 ): void => {
     console.log('Current Song:', currentSong);
     console.log('Attributes:', attributes);
@@ -106,9 +108,11 @@ export const validateAttributeGuess = (
         currentSong,
         attributes
     );
-
+    // Set values used for background
     setCheckedGuesses(values.guesses);
 
+    // Update Score
+    setStats(incrementScore(stats, values.score));
     
     // Allow user to close Modal
     setIsSubmitted(true);

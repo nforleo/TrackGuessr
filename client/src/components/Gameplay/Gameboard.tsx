@@ -143,6 +143,8 @@ export const Gameboard = ({
                     show={showAttributeModal} 
                     currentSong={currentSong}
                     setCurrentSong={setCurrentSong}
+                    setStats={setStats}
+                    stats={stats}
                 />}
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
