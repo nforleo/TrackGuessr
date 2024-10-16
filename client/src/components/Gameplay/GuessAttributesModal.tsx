@@ -1,17 +1,27 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal, Stack } from "react-bootstrap"
 import { Attributes } from "../../models/Attributes";
+import { validateAttributeGuess } from "./utils/logic";
+import { TrackCard } from "../../models/TrackCard";
+import { Guesses } from "../../models/ValidatedGuesses";
+import styles from './assets/styles.module.css';
 
 interface GuessAttributesModalProps {
     show: boolean;
     setShow: (b: boolean) => void;
+    currentSong: TrackCard | undefined;
+    setCurrentSong: (t: TrackCard | undefined) => void;
 }
 
 export const GuessAttributesModal = ({
     show,
-    setShow
+    setShow,
+    currentSong,
+    setCurrentSong
 }: GuessAttributesModalProps): JSX.Element => {
 
+    const [checkedGuesses, setCheckedGuesses] = useState<Guesses>({} as Guesses);
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [attributes, setAttributes] = useState<Attributes>({
         artist: '',
         track: '',
@@ -39,10 +49,6 @@ export const GuessAttributesModal = ({
         });
     }
 
-    useEffect(() => {
-        console.log('Attributes', attributes);
-    }, [JSON.stringify(attributes)]);
-
     return (<Modal size="lg" show={show}>
         <Modal.Header>
             <Modal.Title>Enter Attribue</Modal.Title>
@@ -57,6 +63,12 @@ export const GuessAttributesModal = ({
                         aria-label="Artist"
                         aria-describedby="inputGroup-artist"
                         onChange={handleArtistChange}
+                        className={checkedGuesses.artist ? 
+                            styles.correctBackground : 
+                            checkedGuesses.album === false ?
+                            styles.incorrectBackground :
+                            styles.defaultBackground
+                        }
                     />
                 </InputGroup>
                 <InputGroup>
@@ -67,6 +79,12 @@ export const GuessAttributesModal = ({
                         aria-label="Track"
                         aria-describedby="inputGroup-track"
                         onChange={handleTrackChange}
+                        className={checkedGuesses.track ? 
+                            styles.correctBackground : 
+                            checkedGuesses.album === false ?
+                            styles.incorrectBackground :
+                            styles.defaultBackground
+                        }
                     />
                 </InputGroup>
                 <InputGroup>
@@ -77,6 +95,12 @@ export const GuessAttributesModal = ({
                         aria-label="Album"
                         aria-describedby="inputGroup-album"
                         onChange={handleAlbumChange}
+                        className={checkedGuesses.album ? 
+                            styles.correctBackground : 
+                            checkedGuesses.album === false ?
+                            styles.incorrectBackground :
+                            styles.defaultBackground
+                        }
                     />
                 </InputGroup>
             </Stack>
@@ -87,14 +111,26 @@ export const GuessAttributesModal = ({
             >
                 Give Up
             </Button>
-            <Button
+            {!isSubmitted && <Button
                 variant="success"
                 onClick={() => {
-                    console.log('Confirming')
+                    validateAttributeGuess(
+                        currentSong, 
+                        attributes,
+                        setIsSubmitted,
+                        setCurrentSong,
+                        setCheckedGuesses
+                    )
                 }}
             >
                 Submit
-            </Button>
+            </Button>}
+            {isSubmitted && <Button
+                variant="primary"
+                 onClick={() => setShow(false)}
+            >
+                Close
+            </Button>}
         </Modal.Footer>
     </Modal>);
 }
