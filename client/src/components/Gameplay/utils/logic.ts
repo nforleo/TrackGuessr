@@ -1,5 +1,7 @@
 import { Attributes } from "../../../models/Attributes";
 import { TrackCard } from "../../../models/TrackCard";
+import { UserStats } from "../../../models/UserStats";
+import { Guesses, ValidatedGuesses } from "../../../models/ValidatedGuesses";
 
 export const playNextSong = (track: TrackCard, setCurrentSong: (t: TrackCard) => void, playSong: (id: string) => void): void => {
     setCurrentSong(track);
@@ -58,9 +60,66 @@ export const resetAndRemoveWrongCard = (
     setUnrevealedCardInList(false);
 }
 
-export const validateAttributeGuess = (
+export const checkGuesses = (
     currentSong: TrackCard | undefined,
     attributes: Attributes
-) => {
+): ValidatedGuesses => {
+    const values = {
+        score: 0,
+        guesses: {
+            artist: false,
+            track: false,
+            album: false
+        }
+    }
+
+    if (currentSong?.artist?.toLowerCase() === attributes.artist.toLowerCase()) {
+        values.score++;
+        values.guesses.artist = true;
+    }
+
+    if (currentSong?.title?.toLowerCase() === attributes.track.toLowerCase()) {
+        values.score++;
+        values.guesses.track = true;
+    }
+
+    if (currentSong?.album?.toLowerCase() === attributes.album.toLowerCase()) {
+        values.score++;
+        values.guesses.album = true;
+    }
+
+    return values;
+}
+
+export const validateAttributeGuess = (
+    currentSong: TrackCard | undefined,
+    attributes: Attributes,
+    setIsSubmitted: (b: boolean) => void,
+    setCurrentSong: (s: TrackCard | undefined) => void,
+    setCheckedGuesses: (g: Guesses) => void
+): void => {
+    console.log('Current Song:', currentSong);
+    console.log('Attributes:', attributes);
     
+    // Get Score and check which ones where right and wrong
+    const values = checkGuesses(
+        currentSong,
+        attributes
+    );
+
+    setCheckedGuesses(values.guesses);
+
+    
+    // Allow user to close Modal
+    setIsSubmitted(true);
+
+     // Remove current song so the next one can be played
+    setCurrentSong(undefined);
+}
+
+export const incrementScore = (stats: UserStats, score: number): UserStats => {
+    return {
+        ...stats,
+        score: stats.score + score
+    };
 }
