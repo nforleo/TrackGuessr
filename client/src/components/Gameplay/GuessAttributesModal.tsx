@@ -67,6 +67,7 @@ export const GuessAttributesModal = ({
                     <Form.Control
                         aria-label="Artist"
                         aria-describedby="inputGroup-artist"
+                        data-testid='input-artist'
                         onChange={handleArtistChange}
                         className={checkedGuesses.artist ? 
                             styles.correctBackground : 
@@ -83,6 +84,7 @@ export const GuessAttributesModal = ({
                     <Form.Control
                         aria-label="Track"
                         aria-describedby="inputGroup-track"
+                        data-testid='input-track'
                         onChange={handleTrackChange}
                         className={checkedGuesses.track ? 
                             styles.correctBackground : 
@@ -99,6 +101,7 @@ export const GuessAttributesModal = ({
                     <Form.Control
                         aria-label="Album"
                         aria-describedby="inputGroup-album"
+                        data-testid='input-album'
                         onChange={handleAlbumChange}
                         className={checkedGuesses.album ? 
                             styles.correctBackground : 
