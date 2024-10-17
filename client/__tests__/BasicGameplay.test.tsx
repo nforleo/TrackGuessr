@@ -14,15 +14,6 @@ jest.mock('axios');
 
 describe('The Game should handle all cards existing in different states', () => {
 
-    // beforeAll(() => {
-    //     Object.defineProperty(window, 'location', {
-    //         value: {
-    //             onSpotifyWebPlaybackSDKReady: jest.fn(),
-    //         },
-    //         writable: true
-    //     });
-    // });
-
     jest.spyOn(api, "getDailyTracks").mockResolvedValue([
         {
             id: "track_id",
