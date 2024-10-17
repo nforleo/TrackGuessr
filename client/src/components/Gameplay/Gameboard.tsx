@@ -10,7 +10,8 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import { incrementScore, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import { GuessAttributesModal } from './GuessAttributesModal';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -101,19 +102,9 @@ export const Gameboard = ({
         }
     }
 
-    // const resetAndRemoveWrongCard = () => {
-    //     const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
-    //     setRevealedList(removedIncorrectGuess);
-    //     setIsIncorrectGuess(undefined);
-    //     // Remove current song so the next one can be played
-    //     setCurrentSong(undefined);
-    //     // We can allow the next card to be moved into the gameplay area
-    //     setUnrevealedCardInList(false);
-    // }
-
     const processCorrectGuess = () => {
             // Remove current song so the next one can be played
-            setCurrentSong(undefined);
+            // setCurrentSong(undefined);
             // We can allow the next card to be moved into the gameplay area
             setUnrevealedCardInList(false);
             // Make the gameplay area green for 5 seconds
@@ -121,10 +112,7 @@ export const Gameboard = ({
                 setIsIncorrectGuess(undefined);
             }, 5000);
             // Increment score by 2
-            setStats({
-                ...stats,
-                score: stats.score + 2
-            });
+            setStats(incrementScore(stats, 2));
             // Show Attributes Modal
             setShowAttributesModal(true);
     }
@@ -150,6 +138,14 @@ export const Gameboard = ({
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {revealedList.length > 0 && unrevealedList.length > 0 ? <Container className='pt-2 h-100'>
+                {showAttributeModal && <GuessAttributesModal 
+                    setShow={setShowAttributesModal} 
+                    show={showAttributeModal} 
+                    currentSong={currentSong}
+                    setCurrentSong={setCurrentSong}
+                    setStats={setStats}
+                    stats={stats}
+                />}
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
                         <Col md={2}>

@@ -18,6 +18,7 @@ export const formatTracksForFrontEnd = (
       id: track.uri,
       revealed: false,
       year: parseInt(track.album?.release_date?.substring(0, 4) || "-1"),
+      album: track.album.name,
       artist: track.artists[0].name,
       title: track.name,
     });
