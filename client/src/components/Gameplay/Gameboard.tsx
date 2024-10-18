@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { incrementScore, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import { getGameplayBackgroundColor, incrementScore, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 
 interface GameboardProps {
@@ -102,33 +102,8 @@ export const Gameboard = ({
         }
     }
 
-    const processCorrectGuess = () => {
-            // Remove current song so the next one can be played
-            // setCurrentSong(undefined);
-            // We can allow the next card to be moved into the gameplay area
-            setUnrevealedCardInList(false);
-            // Make the gameplay area green for 5 seconds
-            setTimeout(() => {
-                setIsIncorrectGuess(undefined);
-            }, 5000);
-            // Increment score by 2
-            setStats(incrementScore(stats, 2));
-            // Show Attributes Modal
-            setShowAttributesModal(true);
-    }
-
     const disableNextTrack = (): boolean => {
         return !currentSong || unrevealedCardInList;
-    }
-
-    const getGameplayBackgroundColor = (): string => {
-        if (isIncorrectGuess) {
-            return 'incorrectBackground';
-        } else if (isIncorrectGuess === false) {
-            return 'correctBackground';
-        }
-
-        return 'defaultBackground';
     }
 
     const disableStartSongButton = (): boolean => {
@@ -186,7 +161,10 @@ export const Gameboard = ({
                                 currentSong || {} as TrackCard,
                                 revealedList,
                                 setIsIncorrectGuess,
-                                processCorrectGuess
+                                setUnrevealedCardInList,
+                                setStats,
+                                setShowAttributesModal,
+                                stats
                             )}
                         >
                             Confirm Guess
@@ -211,7 +189,7 @@ export const Gameboard = ({
                         </ButtonGroup>
                     </Row>
                     <Row>
-                        <Col className={`${styles.answerSection} ${styles[getGameplayBackgroundColor()]}`}>
+                        <Col className={`${styles.answerSection} ${styles[getGameplayBackgroundColor(isIncorrectGuess)]}`}>
                                <SortableContext items={revealedList} strategy={horizontalListSortingStrategy} id='droppable-area'>
                                     {revealedList.map((track) => (
                                         <SortableItem key={track.id} track={track} />

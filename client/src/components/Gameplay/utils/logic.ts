@@ -28,8 +28,11 @@ export const submitGuess = (
     setRevealedList: (prevItems: (t: TrackCard[]) => TrackCard[]) => void,
     currentSong: TrackCard,
     revealedList: TrackCard[],
-    setIsIncorrectGuess: (b: boolean) => void,
-    processCorrectGuess: () => void
+    setIsIncorrectGuess: (b: boolean | undefined) => void,
+    setUnrevealedCardInList: (v: boolean) => void,
+    setStats: (u: UserStats) => void,
+    setShowAttributesModal: (b: boolean) => void,
+    stats: UserStats
 ): void => {
     // Reveal Card Order
     setRevealedList((prevItems: TrackCard[]) => setRevealedListCallback(prevItems, currentSong))
@@ -39,7 +42,13 @@ export const submitGuess = (
     setIsIncorrectGuess(!isGuessCorrect);
     
     if (isGuessCorrect) {
-        processCorrectGuess();
+        processCorrectGuess(
+            setUnrevealedCardInList,
+            setIsIncorrectGuess,
+            setStats,
+            setShowAttributesModal,
+            stats
+        );
     }
 }
 
@@ -126,4 +135,33 @@ export const incrementScore = (stats: UserStats, score: number): UserStats => {
         ...stats,
         score: stats.score + score
     };
+}
+
+export const processCorrectGuess = (
+    setUnrevealedCardInList: (b: boolean) => void,
+    setIsIncorrectGuess: (u: undefined) => void,
+    setStats: (u: UserStats) => void,
+    setShowAttributesModal: (b: boolean) => void,
+    stats: UserStats
+) => {
+        // We can allow the next card to be moved into the gameplay area
+        setUnrevealedCardInList(false);
+        // Make the gameplay area green for 5 seconds
+        setTimeout(() => {
+            setIsIncorrectGuess(undefined);
+        }, 5000);
+        // Increment score by 2
+        setStats(incrementScore(stats, 2));
+        // Show Attributes Modal
+        setShowAttributesModal(true);
+}
+
+export const getGameplayBackgroundColor = (isIncorrectGuess: boolean | undefined): string => {
+    if (isIncorrectGuess) {
+        return 'incorrectBackground';
+    } else if (isIncorrectGuess === false) {
+        return 'correctBackground';
+    }
+
+    return 'defaultBackground';
 }

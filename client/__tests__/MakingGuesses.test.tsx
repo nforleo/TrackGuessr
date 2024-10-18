@@ -13,6 +13,7 @@ import { act, Dispatch } from 'react';
 import React from 'react';
 import { TrackCard } from '../src/models/TrackCard';
 import * as logic from '../src/components/Gameplay/utils/logic';
+import { UserStats } from '../src/models/UserStats';
 
 afterAll(cleanup);
 
@@ -67,7 +68,7 @@ describe('Verify basic guessing functionality', () => {
                 <Gameboard mode='daily' />
         </MemoryRouter>);
 
-        const badGuess = [{
+        const revealedList = [{
             id: "track_id",
             revealed: true,
             year: 1999,
@@ -83,8 +84,13 @@ describe('Verify basic guessing functionality', () => {
             album: "album_name",
         }];
 
-        const mockSetRevealedList = jest.fn();
-        const mockCurrentSong = {
+        const setRevealedList = jest.fn();
+        const stats: UserStats = {
+            score: 0,
+            mistakes: 0,
+            time: ''
+        }
+        const currentSong = {
             id: "track_id2",
             revealed: false,
             year: 1999,
@@ -92,8 +98,10 @@ describe('Verify basic guessing functionality', () => {
             title: "track_name",
             album: "album_name",
         };
-        const mockSetIsIncorrectGuess = jest.fn();
-        const mockProcessCorrectGuess = jest.fn();
+        const setIsIncorrectGuess = jest.fn();
+        const setUnrevealedCardInListMock = jest.fn();
+        const setStats = jest.fn();
+        const setShowAttributesModal = jest.fn();
 
         logic.setRevealedListCallback([{
                 id: "track_id1",
@@ -109,16 +117,19 @@ describe('Verify basic guessing functionality', () => {
                 artist: "artist_name",
                 title: "track_name",
                 album: "album_name",
-            }], mockCurrentSong);
-        const mockSetCurrentSong = jest.fn();
-        const mockSetUnRevealedCardInList = jest.fn();
+            }], currentSong);
+        const setCurrentSong = jest.fn();
+        const setUnrevealedCardInList = jest.fn();
 
         logic.submitGuess(
-            mockSetRevealedList,
-            mockCurrentSong,
-            badGuess,
-            mockSetIsIncorrectGuess,
-            mockProcessCorrectGuess
+            setRevealedList,
+            currentSong,
+            revealedList,
+            setIsIncorrectGuess,
+            setUnrevealedCardInListMock,
+            setStats,
+            setShowAttributesModal,
+            stats
         )
         
         expect(await screen.findByText(/score/i)).toBeInTheDocument();
@@ -134,12 +145,12 @@ describe('Verify basic guessing functionality', () => {
         fireEvent.click(confirmButton);
 
         logic.resetAndRemoveWrongCard(
-            badGuess, 
-            mockCurrentSong, 
-            mockSetRevealedList, 
-            mockSetIsIncorrectGuess, 
-            mockSetCurrentSong,
-            mockSetUnRevealedCardInList
+            revealedList, 
+            currentSong, 
+            setRevealedList, 
+            setIsIncorrectGuess, 
+            setCurrentSong,
+            setUnrevealedCardInList
         )
     });
 
@@ -172,8 +183,15 @@ describe('Verify basic guessing functionality', () => {
             title: "track_name",
             album: "album_name",
         }];
+        const stats: UserStats = {
+            score: 0,
+            mistakes: 0,
+            time: ''
+        }
         const mockSetIsIncorrectGuess = jest.fn();
         const mockProcessCorrectGuess = jest.fn();
+        const setStats = jest.fn();
+        const setShowAttributesModal = jest.fn();
 
         logic.setRevealedListCallback([{
                 id: "track_id",
@@ -196,7 +214,10 @@ describe('Verify basic guessing functionality', () => {
             mockCurrentSong,
             mockRevealedList,
             mockSetIsIncorrectGuess,
-            mockProcessCorrectGuess
+            mockProcessCorrectGuess,
+            setStats,
+            setShowAttributesModal,
+            stats
         )
         
         expect(await screen.findByText(/score/i)).toBeInTheDocument();
