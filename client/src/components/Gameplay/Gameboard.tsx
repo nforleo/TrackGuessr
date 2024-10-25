@@ -33,6 +33,7 @@ export const Gameboard = ({
         time: "na"
     });
     const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
+    const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -44,6 +45,7 @@ export const Gameboard = ({
                 first.revealed = true;
                 setRevealedList([first]);
                 setUnrevealedList(tracks);
+                setHasLoaded(true);
             }
         });
     }, []);
@@ -112,7 +114,7 @@ export const Gameboard = ({
 
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
-            {revealedList.length > 0 && unrevealedList.length > 0 ? <Container className='pt-2 h-100'>
+            {revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 
                     show={showAttributeModal} 
