@@ -1,9 +1,8 @@
 export type TracksResponse = {
-  tracks: {
-    items: {
-      track: TrackFromSpotify;
-    }[];
-  };
+  items: {
+    track: TrackFromSpotify;
+  }[];
+  next: string | null;
 };
 
 export type Track = {

@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Form, InputGroup, Modal, Stack } from "react-bootstrap"
 import { Attributes } from "../../models/Attributes";
-import { validateAttributeGuess } from "./utils/logic";
+import { giveUp, validateAttributeGuess } from "./utils/logic";
 import { TrackCard } from "../../models/TrackCard";
 import { Guesses } from "../../models/ValidatedGuesses";
 import styles from './assets/styles.module.css';
@@ -13,7 +13,11 @@ interface GuessAttributesModalProps {
     currentSong: TrackCard | undefined;
     setCurrentSong: (t: TrackCard | undefined) => void;
     setStats: (s: UserStats) => void;
-    stats: UserStats
+    stats: UserStats;
+    setIsFinished: (b: boolean) => void;
+    hasLoaded: boolean;
+    unrevealedList: TrackCard[];
+    unrevealedCardInList: boolean;
 }
 
 export const GuessAttributesModal = ({
@@ -22,7 +26,11 @@ export const GuessAttributesModal = ({
     currentSong,
     setCurrentSong,
     setStats,
-    stats
+    stats,
+    setIsFinished,
+    hasLoaded,
+    unrevealedList,
+    unrevealedCardInList
 }: GuessAttributesModalProps): JSX.Element => {
 
     const [checkedGuesses, setCheckedGuesses] = useState<Guesses>({} as Guesses);
@@ -56,7 +64,7 @@ export const GuessAttributesModal = ({
 
     return (<Modal size="lg" show={show}>
         <Modal.Header>
-            <Modal.Title>Enter Attribue</Modal.Title>
+            <Modal.Title>Enter Attribute</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Stack gap={3}>
@@ -96,7 +104,7 @@ export const GuessAttributesModal = ({
                 </InputGroup>
                 <InputGroup>
                     <InputGroup.Text id="inputGroup-album">
-                        Album
+                        Album Name
                     </InputGroup.Text>
                     <Form.Control
                         aria-label="Album"
@@ -115,7 +123,14 @@ export const GuessAttributesModal = ({
         </Modal.Body>
         <Modal.Footer>
             <Button variant='outline-danger'
-                onClick={() => setShow(false)}
+                onClick={() => giveUp(
+                    setShow,
+                    setCurrentSong,
+                    setIsFinished,
+                    hasLoaded,
+                    unrevealedList,
+                    unrevealedCardInList
+                )}
             >
                 Give Up
             </Button>
@@ -129,7 +144,11 @@ export const GuessAttributesModal = ({
                         setCurrentSong,
                         setCheckedGuesses,
                         setStats,
-                        stats
+                        stats,
+                        setIsFinished,
+                        hasLoaded,
+                        unrevealedList,
+                        unrevealedCardInList
                     )
                 }}
             >

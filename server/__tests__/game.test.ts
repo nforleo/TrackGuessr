@@ -98,32 +98,180 @@ describe("It should test the game logic", () => {
     expect(data[0].id).toBe(response.id);
   });
 
-  it("should return 1 tracks with getNTracks", async () => {
+  it("should return 11 tracks with getNTracks(10)", async () => {
     const playListSongs = {
-      tracks: {
-        items: [
-          {
-            track: {
-              album: {
-                name: "album_name",
-                release_date: "1999",
-              },
-              artists: [
-                {
-                  name: "artist_name",
-                },
-              ],
-              name: "track_name",
-              uri: "spotify_uri",
+      items: [
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
             },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
           },
-        ],
-      },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+        {
+          track: {
+            album: {
+              name: "album_name",
+              release_date: "1999",
+            },
+            artists: [
+              {
+                name: "artist_name",
+              },
+            ],
+            name: "track_name",
+            uri: "spotify_uri",
+          },
+        },
+      ],
     };
 
     (axios.get as jest.Mock).mockResolvedValueOnce({ data: playListSongs });
 
-    const nTracks = await gameService.getNTracks(0);
-    expect(nTracks.length).toBe(1);
+    const nTracks = await gameService.getNTracks(10);
+    expect(nTracks.length).toBe(11);
   });
 });

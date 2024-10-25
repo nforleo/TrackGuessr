@@ -36,7 +36,7 @@ export const formatTracksForFrontEnd = (
  * @returns An array of n random tracks
  */
 export const selectNRandomTracks = (
-  playlist: TracksResponse,
+  playlist: { track: TrackFromSpotify }[],
   n?: number,
 ): Track[] => {
   if (n === undefined) {
@@ -48,7 +48,7 @@ export const selectNRandomTracks = (
   n = n + 1;
 
   // Get the total number of tracks in the playlist
-  const playlistLen = playlist.tracks.items.length;
+  const playlistLen = playlist.length;
 
   // Create array to hold tracks
   const selectedTracks: TrackFromSpotify[] = [];
@@ -58,7 +58,7 @@ export const selectNRandomTracks = (
 
     // Flatten Playlist so that it can be formatted
     for (let i = 0; i < playlistLen; i++) {
-      selectedTracks.push(playlist.tracks.items[i].track);
+      selectedTracks.push(playlist[i].track);
     }
   } else {
     // Else process just the selected tracks
@@ -67,11 +67,11 @@ export const selectNRandomTracks = (
     const indices = new Set();
 
     while (selectedTracks.length < n) {
-      // Generate a random integer, x, to index playlist where 0 <= x < n
-      const randomIndex = Math.floor(Math.random() * n);
+      // Generate a random integer, x, to index playlist where 0 <= x < playlistLen
+      const randomIndex = Math.floor(Math.random() * playlistLen);
 
       if (!indices.has(randomIndex)) {
-        selectedTracks.push(playlist.tracks.items[randomIndex].track);
+        selectedTracks.push(playlist[randomIndex].track);
         indices.add(randomIndex);
       }
     }
@@ -92,12 +92,13 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
     throw new Error(`Application not Authenticated`);
   }
   console.log("getNTracks got token, calling get request");
-  const { data } = await axios.get(
-    `https://api.spotify.com/v1/playlists/${TRACKGSSR_PLAYLIST_ID}`,
+  let { data } = await axios.get(
+    `https://api.spotify.com/v1/playlists/${TRACKGSSR_PLAYLIST_ID}/tracks`,
     {
       params: {
         fields:
-          "tracks.items.track(name,uri,album(name,release_date),artists(name))",
+          // "tracks.next,tracks.items.track(name,uri,album(name,release_date),artists(name))",
+          "next,items(track(name,uri,album(name,release_date),artists(name)))",
       },
       headers: {
         Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
@@ -105,7 +106,24 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
     },
   );
 
-  return selectNRandomTracks(data as TracksResponse, n);
+  let playlist = (data as TracksResponse).items;
+  console.log("Initial Playlist length:", playlist.length);
+
+  while (data.next) {
+    console.log("Getting more tracks from playlist... " + data.next);
+    data = (
+      await axios.get((data as TracksResponse).next as string, {
+        headers: {
+          Authorization: `${accessToken.token_type} ${accessToken.access_token}`,
+        },
+      })
+    ).data;
+
+    playlist = playlist.concat((data as TracksResponse).items);
+  }
+
+  console.log(`Found ${playlist.length} songs in the playlist`);
+  return selectNRandomTracks(playlist, n);
 };
 
 export const getDailyTracks = async (): Promise<Track[]> => {
