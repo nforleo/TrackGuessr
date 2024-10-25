@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Form, InputGroup, Modal, Stack } from "react-bootstrap"
 import { Attributes } from "../../models/Attributes";
-import { validateAttributeGuess } from "./utils/logic";
+import { giveUp, validateAttributeGuess } from "./utils/logic";
 import { TrackCard } from "../../models/TrackCard";
 import { Guesses } from "../../models/ValidatedGuesses";
 import styles from './assets/styles.module.css';
@@ -115,7 +115,10 @@ export const GuessAttributesModal = ({
         </Modal.Body>
         <Modal.Footer>
             <Button variant='outline-danger'
-                onClick={() => setShow(false)}
+                onClick={() => giveUp(
+                    setShow,
+                    setCurrentSong
+                )}
             >
                 Give Up
             </Button>

@@ -165,3 +165,13 @@ export const getGameplayBackgroundColor = (isIncorrectGuess: boolean | undefined
 
     return 'defaultBackground';
 }
+
+export const giveUp = (
+    setShow: (b: boolean) => void,
+    setCurrentSong: (s: TrackCard | undefined) => void
+) => {
+    // Clear current song to enable start song button
+    setCurrentSong(undefined);
+    // Hide Modal
+    setShow(false);
+}
