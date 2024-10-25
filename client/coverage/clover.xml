@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1729887236096" clover="3.2.0">
-  <project timestamp="1729887236096" name="All files">
-    <metrics statements="203" coveredstatements="98" conditionals="132" coveredconditionals="22" methods="51" coveredmethods="12" elements="386" coveredelements="132" complexity="0" loc="203" ncloc="203" packages="5" files="10" classes="10"/>
+<coverage generated="1729889889157" clover="3.2.0">
+  <project timestamp="1729889889158" name="All files">
+    <metrics statements="204" coveredstatements="102" conditionals="131" coveredconditionals="22" methods="51" coveredmethods="14" elements="386" coveredelements="138" complexity="0" loc="204" ncloc="204" packages="5" files="10" classes="10"/>
     <package name="atoms">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="UserAtom.ts" path="/Users/nforleo/capstone/TrackGuessr/client/src/atoms/UserAtom.ts">
@@ -11,19 +11,20 @@
       </file>
     </package>
     <package name="components">
-      <metrics statements="7" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="EndSplashScreen.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/EndSplashScreen.tsx">
-        <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
       </file>
       <file name="Header.tsx" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Header.tsx">
-        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
       </file>
     </package>
     <package name="components.Gameplay">
@@ -185,9 +186,9 @@
       </file>
     </package>
     <package name="components.Gameplay.utils">
-      <metrics statements="60" coveredstatements="14" conditionals="56" coveredconditionals="1" methods="16" coveredmethods="1"/>
+      <metrics statements="60" coveredstatements="14" conditionals="55" coveredconditionals="1" methods="16" coveredmethods="1"/>
       <file name="logic.ts" path="/Users/nforleo/capstone/TrackGuessr/client/src/components/Gameplay/utils/logic.ts">
-        <metrics statements="60" coveredstatements="14" conditionals="56" coveredconditionals="1" methods="16" coveredmethods="1"/>
+        <metrics statements="60" coveredstatements="14" conditionals="55" coveredconditionals="1" methods="16" coveredmethods="1"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -208,7 +209,7 @@
         <line num="69" count="0" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
         <line num="73" count="0" type="stmt"/>
-        <line num="75" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="75" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="78" count="1" type="stmt"/>
         <line num="82" count="0" type="stmt"/>
         <line num="91" count="0" type="cond" truecount="0" falsecount="9"/>

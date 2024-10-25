@@ -64,7 +64,7 @@ export const GuessAttributesModal = ({
 
     return (<Modal size="lg" show={show}>
         <Modal.Header>
-            <Modal.Title>Enter Attribue</Modal.Title>
+            <Modal.Title>Enter Attribute</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Stack gap={3}>
@@ -104,7 +104,7 @@ export const GuessAttributesModal = ({
                 </InputGroup>
                 <InputGroup>
                     <InputGroup.Text id="inputGroup-album">
-                        Album
+                        Album Name
                     </InputGroup.Text>
                     <Form.Control
                         aria-label="Album"

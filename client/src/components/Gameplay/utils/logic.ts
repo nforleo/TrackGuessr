@@ -72,7 +72,7 @@ export const resetAndRemoveWrongCard = (
     // We can allow the next card to be moved into the gameplay area
     setUnrevealedCardInList(false);
     // Are we finished with the game?
-    setIsFinished(hasLoaded && unrevealedList.length === 0 && !unrevealedCardInList);
+    setIsFinished(hasLoaded && unrevealedList.length === 0);
 }
 
 export const checkGuesses = (

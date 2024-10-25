@@ -1,6 +1,7 @@
-import { Stack } from "react-bootstrap";
+import { Button, Stack } from "react-bootstrap";
 import { UserStats } from "../models/UserStats"
 import { Header } from "./Header";
+import { Link } from "react-router-dom";
 
 interface EndSplashScreenProps {
     stats: UserStats;
@@ -9,7 +10,21 @@ interface EndSplashScreenProps {
 export const EndSplashScreen = ({
     stats
 }: EndSplashScreenProps): JSX.Element => {
-    return <Stack>
+    return <Stack style={{ alignItems: 'center'}}>
         <Header />
+        <Stack>
+            <span>
+                Your Score: {stats.score}
+            </span>
+            <span>
+                Number of Mistakes: {stats.mistakes}
+            </span>
+            <span>
+                Your Time: {stats.time}
+            </span>
+        </Stack>
+        <Link style={{width: 'min-content'}} to="" className="btn btn-primary">
+            Home
+        </Link>
     </Stack>
 }
