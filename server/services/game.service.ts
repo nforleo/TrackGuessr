@@ -67,8 +67,8 @@ export const selectNRandomTracks = (
     const indices = new Set();
 
     while (selectedTracks.length < n) {
-      // Generate a random integer, x, to index playlist where 0 <= x < n
-      const randomIndex = Math.floor(Math.random() * n);
+      // Generate a random integer, x, to index playlist where 0 <= x < playlistLen
+      const randomIndex = Math.floor(Math.random() * playlistLen);
 
       if (!indices.has(randomIndex)) {
         selectedTracks.push(playlist[randomIndex].track);

@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { getGameplayBackgroundColor, incrementScore, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import { getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
 
@@ -134,9 +134,14 @@ export const Gameboard = ({
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
                         <Col md={2}>
-                            <span>
-                                Score: {stats.score}
-                            </span>
+                            <Stack>
+                                <span>
+                                    Songs Remaining: {unrevealedList.length}
+                                </span>
+                                <span>
+                                    Score: {stats.score}
+                                </span>
+                            </Stack>
                         </Col>
                         <Col>
                             <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
