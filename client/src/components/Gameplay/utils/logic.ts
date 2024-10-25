@@ -32,7 +32,7 @@ export const submitGuess = (
     setUnrevealedCardInList: (v: boolean) => void,
     setStats: (u: UserStats) => void,
     setShowAttributesModal: (b: boolean) => void,
-    stats: UserStats
+    stats: UserStats,
 ): void => {
     // Reveal Card Order
     setRevealedList((prevItems: TrackCard[]) => setRevealedListCallback(prevItems, currentSong))
@@ -58,7 +58,11 @@ export const resetAndRemoveWrongCard = (
     setRevealedList: (t: TrackCard[]) => void,
     setIsIncorrectGuess: (v: boolean | undefined) => void,
     setCurrentSong: (t: TrackCard | undefined) => void,
-    setUnrevealedCardInList: (v: boolean) => void
+    setUnrevealedCardInList: (v: boolean) => void,
+    setIsFinished: (b: boolean) => void,
+    hasLoaded: boolean,
+    unrevealedList: TrackCard[],
+    unrevealedCardInList: boolean
 ) => {
     const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
     setRevealedList(removedIncorrectGuess);
@@ -67,6 +71,8 @@ export const resetAndRemoveWrongCard = (
     setCurrentSong(undefined);
     // We can allow the next card to be moved into the gameplay area
     setUnrevealedCardInList(false);
+    // Are we finished with the game?
+    setIsFinished(hasLoaded && unrevealedList.length === 0 && !unrevealedCardInList);
 }
 
 export const checkGuesses = (
@@ -107,7 +113,11 @@ export const validateAttributeGuess = (
     setCurrentSong: (s: TrackCard | undefined) => void,
     setCheckedGuesses: (g: Guesses) => void,
     setStats: (s: UserStats) => void,
-    stats: UserStats
+    stats: UserStats,
+    setIsFinished: (b: boolean) => void,
+    hasLoaded: boolean,
+    unrevealedList: TrackCard[],
+    unrevealedCardInList: boolean
 ): void => {
     console.log('Current Song:', currentSong);
     console.log('Attributes:', attributes);
@@ -128,6 +138,9 @@ export const validateAttributeGuess = (
 
      // Remove current song so the next one can be played
     setCurrentSong(undefined);
+
+    // Are we finished with the game?
+    setIsFinished(hasLoaded && unrevealedList.length === 0 && !unrevealedCardInList);
 }
 
 export const incrementScore = (stats: UserStats, score: number): UserStats => {
@@ -168,10 +181,18 @@ export const getGameplayBackgroundColor = (isIncorrectGuess: boolean | undefined
 
 export const giveUp = (
     setShow: (b: boolean) => void,
-    setCurrentSong: (s: TrackCard | undefined) => void
+    setCurrentSong: (s: TrackCard | undefined) => void,
+    setIsFinished: (b: boolean) => void,
+    hasLoaded: boolean,
+    unrevealedList: TrackCard[],
+    unrevealedCardInList: boolean
 ) => {
     // Clear current song to enable start song button
     setCurrentSong(undefined);
+    
     // Hide Modal
     setShow(false);
+
+    // Are we finished with the game?
+    setIsFinished(hasLoaded && unrevealedList.length === 0 && !unrevealedCardInList)
 }

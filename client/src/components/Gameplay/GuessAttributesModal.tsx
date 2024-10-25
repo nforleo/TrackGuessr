@@ -13,7 +13,11 @@ interface GuessAttributesModalProps {
     currentSong: TrackCard | undefined;
     setCurrentSong: (t: TrackCard | undefined) => void;
     setStats: (s: UserStats) => void;
-    stats: UserStats
+    stats: UserStats;
+    setIsFinished: (b: boolean) => void;
+    hasLoaded: boolean;
+    unrevealedList: TrackCard[];
+    unrevealedCardInList: boolean;
 }
 
 export const GuessAttributesModal = ({
@@ -22,7 +26,11 @@ export const GuessAttributesModal = ({
     currentSong,
     setCurrentSong,
     setStats,
-    stats
+    stats,
+    setIsFinished,
+    hasLoaded,
+    unrevealedList,
+    unrevealedCardInList
 }: GuessAttributesModalProps): JSX.Element => {
 
     const [checkedGuesses, setCheckedGuesses] = useState<Guesses>({} as Guesses);
@@ -117,7 +125,11 @@ export const GuessAttributesModal = ({
             <Button variant='outline-danger'
                 onClick={() => giveUp(
                     setShow,
-                    setCurrentSong
+                    setCurrentSong,
+                    setIsFinished,
+                    hasLoaded,
+                    unrevealedList,
+                    unrevealedCardInList
                 )}
             >
                 Give Up
@@ -132,7 +144,11 @@ export const GuessAttributesModal = ({
                         setCurrentSong,
                         setCheckedGuesses,
                         setStats,
-                        stats
+                        stats,
+                        setIsFinished,
+                        hasLoaded,
+                        unrevealedList,
+                        unrevealedCardInList
                     )
                 }}
             >

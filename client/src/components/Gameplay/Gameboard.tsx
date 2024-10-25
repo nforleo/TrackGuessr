@@ -12,6 +12,7 @@ import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
 import { getGameplayBackgroundColor, incrementScore, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
+import { EndSplashScreen } from '../EndSplashScreen';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -34,6 +35,7 @@ export const Gameboard = ({
     });
     const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
     const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+    const [isFinished, setIsFinished] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -114,7 +116,9 @@ export const Gameboard = ({
 
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
-            {revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
+            {isFinished ? 
+            <EndSplashScreen stats={stats} /> :
+            revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 
                     show={showAttributeModal} 
@@ -122,6 +126,10 @@ export const Gameboard = ({
                     setCurrentSong={setCurrentSong}
                     setStats={setStats}
                     stats={stats}
+                    setIsFinished={setIsFinished}
+                    hasLoaded={hasLoaded}
+                    unrevealedList={unrevealedList}
+                    unrevealedCardInList={unrevealedCardInList}
                 />}
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
@@ -146,7 +154,11 @@ export const Gameboard = ({
                                             setRevealedList,
                                             setIsIncorrectGuess,
                                             setCurrentSong,
-                                            setUnrevealedCardInList
+                                            setUnrevealedCardInList,
+                                            setIsFinished,
+                                            hasLoaded,
+                                            unrevealedList,
+                                            unrevealedCardInList
                                         )
                                     }>
                                         Continue
@@ -200,7 +212,8 @@ export const Gameboard = ({
                         </Col>
                     </Row>
                 </DndContext>
-            </Container> : <div>Loading...</div>}
+            </Container> 
+            : <div>Loading...</div>}
         </div>
     )
 }
