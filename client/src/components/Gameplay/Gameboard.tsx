@@ -13,7 +13,6 @@ import { UserStats } from '../../models/UserStats';
 import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
-import { useTimer } from 'react-use-precision-timer';
 
 interface GameboardProps {
     mode: "daily" | "custom"
