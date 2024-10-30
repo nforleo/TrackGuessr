@@ -10,9 +10,10 @@ import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
 import { getDailyTracks, playSong } from '../../api';
 import { UserStats } from '../../models/UserStats';
-import { getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess } from './utils/logic';
+import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
+import { useTimer } from 'react-use-precision-timer';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -31,12 +32,28 @@ export const Gameboard = ({
     const [stats, setStats] = useState<UserStats>({
         score: 0,
         mistakes: 0,
-        time: "na"
+        time: 0
     });
     const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
     const [hasLoaded, setHasLoaded] = useState<boolean>(false);
     const [isFinished, setIsFinished] = useState<boolean>(false);
 
+    const [time, setTime] = useState<number>(0);
+    const [running, setRunning] = useState<boolean>(false);
+
+    useEffect(() => {
+        updateTimer(running, setTime);
+    }, [running]);
+
+    useEffect(() => {
+        if (isFinished) {
+            setStats({
+                ...stats,
+                time
+            });
+            setRunning(false);
+        }
+    }, [isFinished])
 
     useEffect(() => {
         getDailyTracks().then((tracks) => {
@@ -48,6 +65,7 @@ export const Gameboard = ({
                 setRevealedList([first]);
                 setUnrevealedList(tracks);
                 setHasLoaded(true);
+                setRunning(true);
             }
         });
     }, []);
@@ -133,13 +151,22 @@ export const Gameboard = ({
                 />}
                 <DndContext onDragEnd={handleDragEnd}>
                     <Row className='h-50'>
-                        <Col md={2}>
+                        <Col md={2} id='current-game-stats'>
                             <Stack>
                                 <span>
                                     Songs Remaining: {unrevealedList.length}
                                 </span>
                                 <span>
                                     Score: {stats.score}
+                                </span>
+                                <span>
+                                    Mistakes: {stats.mistakes}
+                                </span>
+                                <span>
+                                    Time:
+                                    <span className="">
+                                        {formatTime(time)}
+                                    </span>
                                 </span>
                             </Stack>
                         </Col>
@@ -163,7 +190,8 @@ export const Gameboard = ({
                                             setIsFinished,
                                             hasLoaded,
                                             unrevealedList,
-                                            unrevealedCardInList
+                                            setStats,
+                                            stats
                                         )
                                     }>
                                         Continue

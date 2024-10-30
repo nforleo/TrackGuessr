@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Attributes } from "../../../models/Attributes";
 import { TrackCard } from "../../../models/TrackCard";
 import { UserStats } from "../../../models/UserStats";
@@ -62,7 +63,8 @@ export const resetAndRemoveWrongCard = (
     setIsFinished: (b: boolean) => void,
     hasLoaded: boolean,
     unrevealedList: TrackCard[],
-    unrevealedCardInList: boolean
+    setStats: (u: UserStats) => void,
+    stats: UserStats
 ) => {
     const removedIncorrectGuess = revealedList.filter((track) => track.id !== currentSong?.id);
     setRevealedList(removedIncorrectGuess);
@@ -73,6 +75,11 @@ export const resetAndRemoveWrongCard = (
     setUnrevealedCardInList(false);
     // Are we finished with the game?
     setIsFinished(hasLoaded && unrevealedList.length === 0);
+    // Increment mistakes
+    setStats({
+        ...stats,
+        mistakes: stats.mistakes + 1
+    })
 }
 
 export const checkGuesses = (
@@ -195,4 +202,25 @@ export const giveUp = (
 
     // Are we finished with the game?
     setIsFinished(hasLoaded && unrevealedList.length === 0 && !unrevealedCardInList)
+}
+
+export const updateTimer = (
+    running: boolean,
+    setTime: React.Dispatch<React.SetStateAction<number>>,
+
+) => {
+    let interval: string | number | NodeJS.Timeout | undefined;
+    if (running) {
+        interval = setInterval(() => {
+            setTime((prevTime: number) => prevTime + 10)
+        }, 10);
+    } else if (!running) {
+        clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+}
+
+export const formatTime = (time: number): string => {
+    return ("0" + Math.floor((time / 60000) % 60)).slice(-2) + ":" + ("0" + Math.floor((time / 1000) % 60)).slice(-2) + ":" + ("0" + ((time / 10) % 100)).slice(-2);
 }

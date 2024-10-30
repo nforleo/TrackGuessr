@@ -105,7 +105,7 @@ describe("Verify daily game functionality", () => {
         const stats: UserStats = {
             score: 2,
             mistakes: 0,
-            time: 'na'
+            time: 0
         };
 
         render(<MemoryRouter>
