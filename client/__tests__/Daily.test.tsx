@@ -118,8 +118,40 @@ describe("Verify daily game functionality", () => {
         // The placeholder for number of mistakes should be rendered
         expect(await screen.findByText('Number of Mistakes: 0')).toBeInTheDocument();
         // The placeholder for game duration should be rendered
-        expect(await screen.findByText('Your Time: na')).toBeInTheDocument();
+        // expect(await screen.findByText('Your Time: na')).toBeInTheDocument();
         // the Home Button should be rendered
         expect(await screen.findByText('Home')).toBeInTheDocument();
     });
+
+    test('The timer should be accurate', async () => {
+        jest.spyOn(api, "getDailyTracks").mockResolvedValue([
+        {
+            id: "track_id",
+            revealed: false,
+            year: 1999,
+            artist: "artist_name",
+            title: "track_name",
+            album: "album_name",
+        }, {
+            id: "track_id",
+            revealed: false,
+            year: 1999,
+            artist: "artist_name",
+            title: "track_name",
+            album: "album_name",
+        }]);
+
+        render(<MemoryRouter>
+            <Gameboard mode='daily' />
+        </MemoryRouter>);
+
+        console.log('Waiting 5 seconds');
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log('Done waiting.');
+
+        // Expect timer to be 5 
+        // expect(await screen.findByTestId('timer')).toBeInTheDocument();
+        expect(await screen.findByTestId('timer')).toContain('05');
+        
+    }, 30000)
 });

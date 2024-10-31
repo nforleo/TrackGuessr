@@ -161,11 +161,8 @@ export const Gameboard = ({
                                 <span>
                                     Mistakes: {stats.mistakes}
                                 </span>
-                                <span>
-                                    Time:
-                                    <span className="">
-                                        {formatTime(time)}
-                                    </span>
+                                <span data-testid="timer">
+                                    Time: {formatTime(time)}
                                 </span>
                             </Stack>
                         </Col>
