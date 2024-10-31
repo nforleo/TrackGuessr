@@ -158,7 +158,7 @@ export const Gameboard = ({
                                 <span>
                                     Score: {stats.score}
                                 </span>
-                                <span>
+                                <span data-testid="mistakes">
                                     Mistakes: {stats.mistakes}
                                 </span>
                                 <span data-testid="timer">

@@ -156,7 +156,9 @@ describe('Verify basic guessing functionality', () => {
             setUnrevealedCardInList,
             setIsFinished,
             hasLoaded,
-            unrevealedList
+            unrevealedList,
+            setStats,
+            stats
         )
     });
 
