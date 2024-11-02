@@ -88,7 +88,7 @@ describe('Verify basic guessing functionality', () => {
         const stats: UserStats = {
             score: 0,
             mistakes: 0,
-            time: ''
+            time: 0
         }
         const currentSong = {
             id: "track_id2",
@@ -120,6 +120,9 @@ describe('Verify basic guessing functionality', () => {
             }], currentSong);
         const setCurrentSong = jest.fn();
         const setUnrevealedCardInList = jest.fn();
+        const setIsFinished = jest.fn();
+        const hasLoaded = true;
+        const unrevealedList: TrackCard[] = [];
 
         logic.submitGuess(
             setRevealedList,
@@ -150,7 +153,12 @@ describe('Verify basic guessing functionality', () => {
             setRevealedList, 
             setIsIncorrectGuess, 
             setCurrentSong,
-            setUnrevealedCardInList
+            setUnrevealedCardInList,
+            setIsFinished,
+            hasLoaded,
+            unrevealedList,
+            setStats,
+            stats
         )
     });
 
@@ -186,7 +194,7 @@ describe('Verify basic guessing functionality', () => {
         const stats: UserStats = {
             score: 0,
             mistakes: 0,
-            time: ''
+            time: 0
         }
         const mockSetIsIncorrectGuess = jest.fn();
         const mockProcessCorrectGuess = jest.fn();
