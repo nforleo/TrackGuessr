@@ -96,7 +96,7 @@ export const logout = (): void => {
 }
 
 export const getUserInfo = async (): Promise<unknown> => {
-  if (!accessToken.access_token) {
+  if (!accessToken?.access_token) {
     throw new Error(`No user token defined`);
   }
 

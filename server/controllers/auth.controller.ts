@@ -61,7 +61,7 @@ export const getUserInfo = async (
   next: NextFunction,
 ): Promise<unknown> => {
   try {
-    const data = authService.getUserInfo();
+    const data = await authService.getUserInfo();
 
     res.json(data);
   } catch (error: unknown) {
