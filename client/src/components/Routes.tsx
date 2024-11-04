@@ -6,14 +6,22 @@ import { UserAtom } from '../atoms/UserAtom';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { getToken, getUser } from './LoginLogic';
+import { UserInfo } from '../models/UserInfo';
 
 export const Routes = () => {
       const [user, setUser] = useAtom(UserAtom); 
 
         useEffect(() => {
             console.log('Rendering Routes...');
-            getToken(setUser);
-            getUser(setUser, user);
+            getToken().then((t) => {
+                getUser().then((u) => {
+                    setUser({
+                        token: t,
+                        email: u.email,
+                        name: u.display_name
+                    });
+                })
+            });
         }, []);
 
     return (

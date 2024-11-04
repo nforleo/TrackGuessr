@@ -1,22 +1,12 @@
 import { getAuthToken, getUserInfo } from '../api';
 import { User } from '../models/User';
 
-export const getToken = async (setUser: (u: User) => void) => {
+export const getToken = async () => {
     const response = await getAuthToken();
-    setUser({
-        token: (response as { access_token: string}).access_token || '',
-        email: '',
-        name: ''
-    });
+    return (response as { access_token: string}).access_token;
 }
 
-export const getUser = async (setUser: (u: User) => void, user: User | null) => {
+export const getUser = async () => {
     const userInfo = await getUserInfo();
-    console.log('user info:', userInfo);
-    if (user) {
-        setUser({
-            ...user,
-            // email: userInfo.email
-        });
-    }
+    return userInfo;
 }
