@@ -4,24 +4,16 @@ import App from '../App';
 import { Stats } from '../components/Stats/Stats';
 import { UserAtom } from '../atoms/UserAtom';
 import { useAtom } from 'jotai';
-import { getAuthToken } from '../api';
 import { useEffect } from 'react';
+import { getToken, getUser } from './LoginLogic';
 
 export const Routes = () => {
       const [user, setUser] = useAtom(UserAtom); 
 
-        const getToken = async () => {
-            const response = await getAuthToken();
-            setUser({
-                token: (response as { access_token: string}).access_token || '',
-                email: '',
-                name: ''
-            })
-        }
-
         useEffect(() => {
             console.log('Rendering Routes...');
-            getToken();
+            getToken(setUser);
+            getUser(setUser, user);
         }, []);
 
     return (
