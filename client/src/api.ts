@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TrackCard } from './models/TrackCard';
+import { UserInfo } from './models/UserInfo';
 
 export async function getAuthToken(): Promise<{ access_token: string}> {
     const { data } = await axios({
@@ -36,7 +37,7 @@ export async function playSong (uri: string): Promise<void> {
     });
 }
 
-export async function getUserInfo (): Promise<unknown> {
+export async function getUserInfo (): Promise<UserInfo> {
     const { data } = await axios({
         method: 'get',
         url: '/auth/getUserInfo'
