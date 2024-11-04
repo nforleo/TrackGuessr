@@ -94,3 +94,17 @@ export const logout = (): void => {
   accessToken = {} as AccessToken;
   return;
 }
+
+export const getUserInfo = async (): Promise<unknown> => {
+  if (!accessToken.access_token) {
+    throw new Error(`No user token defined`);
+  }
+
+  const { data } = await axios.get('https://api.spotify.com/v1/me', {
+    headers: {
+      Authorization: `Bearer ${accessToken.access_token}`
+    }
+  });
+
+  return data;
+}
