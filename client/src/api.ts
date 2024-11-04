@@ -35,3 +35,12 @@ export async function playSong (uri: string): Promise<void> {
         }
     });
 }
+
+export async function getUserInfo (): Promise<unknown> {
+    const { data } = await axios({
+        method: 'get',
+        url: '/auth/getUserInfo'
+    });
+
+    return data;
+}
