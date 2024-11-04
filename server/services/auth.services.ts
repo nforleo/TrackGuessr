@@ -2,6 +2,7 @@ import qs from "qs";
 import { spotify_client_id, spotify_client_secret } from "../server";
 import axios from "axios";
 import { AccessToken } from "../models/AccessToken";
+import { UserInfo } from "../models/UserInfo";
 
 let accessToken: AccessToken;
 const redirect_uri = 'http://localhost:3000/auth/callback';
@@ -95,7 +96,7 @@ export const logout = (): void => {
   return;
 }
 
-export const getUserInfo = async (): Promise<unknown> => {
+export const getUserInfo = async (): Promise<UserInfo> => {
   if (!accessToken?.access_token) {
     throw new Error(`No user token defined`);
   }
