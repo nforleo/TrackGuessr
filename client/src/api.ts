@@ -50,7 +50,7 @@ export async function getUserInfo (): Promise<UserInfo> {
 export async function updateStats (email: string, stats: UserStats): Promise<void> {
     await axios({
         method: 'get',
-        url: '/stats/updateStats',
+        url: '/userstats/updateStats',
         params: {
             email: email,
             mistakes: stats.mistakes,
@@ -58,4 +58,16 @@ export async function updateStats (email: string, stats: UserStats): Promise<voi
             score: stats.score  
         }
     })
+}
+
+export async function getUserStats (email: string): Promise<UserStats> {
+    const { data } = await axios({
+        method: 'get',
+        url: '/userstats/getUserStats',
+        params: {
+            email
+        } 
+    });
+
+    return data as UserStats;
 }

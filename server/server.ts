@@ -20,7 +20,7 @@ if (!spotify_client_id || !spotify_client_secret) {
 const app = express();
 app.use('/auth', authRouter);
 app.use('/game', gameRouter);
-app.use('/stats', databaseRouter);
+app.use('/userstats', databaseRouter);
 
 
 /**
