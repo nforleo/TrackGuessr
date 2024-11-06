@@ -2,13 +2,7 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router';
-import { Gameboard } from '../src/components/Gameplay/Gameboard';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import * as api from '../src/api';
-import React, { Dispatch, SetStateAction } from 'react';
-import { TrackCard } from '../src/models/TrackCard';
-import axios from 'axios';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { GuessAttributesModal } from '../src/components/Gameplay/GuessAttributesModal';
 
 jest.mock('axios');
@@ -29,8 +23,17 @@ describe('test guess attributes functionality', () => {
         const stats = {
             score: 0,
             mistakes: 0,
-            time: 'mock time'
+            time: 0
         }
+        const unrevealedList = [{
+            id: 'mock id',
+            revealed: false,
+            artist: 'mock artist',
+            title: 'mock track',
+            year: 2000,
+            album: 'mock album'
+        }];
+        const setIsFinished = jest.fn();
         
         
         render(<GuessAttributesModal 
@@ -39,8 +42,11 @@ describe('test guess attributes functionality', () => {
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}
             setStats={setStats}
-            stats={stats}
-        />)
+            stats={stats} 
+            setIsFinished={setIsFinished} 
+            hasLoaded={true} 
+            unrevealedList={unrevealedList} 
+            unrevealedCardInList={false}        />)
 
         const artistInput: HTMLInputElement =  await screen.findByTestId('input-artist');
         fireEvent.change(artistInput, { target: {value: 'mock artist'} });
@@ -68,8 +74,17 @@ describe('test guess attributes functionality', () => {
         const stats = {
             score: 0,
             mistakes: 0,
-            time: 'mock time'
+            time: 0
         }
+        const unrevealedList = [{
+            id: 'mock id',
+            revealed: false,
+            artist: 'mock artist',
+            title: 'mock track',
+            year: 2000,
+            album: 'mock album'
+        }];
+        const setIsFinished = jest.fn();
         
         
         render(<GuessAttributesModal 
@@ -78,8 +93,11 @@ describe('test guess attributes functionality', () => {
             currentSong={currentSong}
             setCurrentSong={setCurrentSong}
             setStats={setStats}
-            stats={stats}
-        />)
+            stats={stats} 
+            setIsFinished={setIsFinished} 
+            hasLoaded={true} 
+            unrevealedList={unrevealedList} 
+            unrevealedCardInList={false}        />)
 
         const trackInput: HTMLInputElement =  await screen.findByTestId('input-track');
         fireEvent.change(trackInput, { target: {value: 'mock track'} });
@@ -107,8 +125,18 @@ describe('test guess attributes functionality', () => {
         const stats = {
             score: 0,
             mistakes: 0,
-            time: 'mock time'
+            time: 0
         }
+        const unrevealedList = [{
+            id: 'mock id',
+            revealed: false,
+            artist: 'mock artist',
+            title: 'mock track',
+            year: 2000,
+            album: 'mock album'
+        }];
+        const setIsFinished = jest.fn();
+        
         
         
         render(<GuessAttributesModal 
@@ -118,6 +146,10 @@ describe('test guess attributes functionality', () => {
             setCurrentSong={setCurrentSong}
             setStats={setStats}
             stats={stats}
+            setIsFinished={setIsFinished} 
+            hasLoaded={true} 
+            unrevealedList={unrevealedList} 
+            unrevealedCardInList={false}   
         />)
 
         const albumInput: HTMLInputElement =  await screen.findByTestId('input-album');

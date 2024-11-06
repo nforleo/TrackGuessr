@@ -3,6 +3,6 @@ import * as databaseController from "../controllers/database.controller";
 
 const router = express.Router();
 
-router.route(`/getUserInfo`).get(databaseController.updateState);
+router.route(`/updateStats`).get(databaseController.updateStats);
 
 export default router;

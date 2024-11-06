@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import * as databaseService from "../services/database.service";
 
-export const updateState = async (
+export const updateStats = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<unknown> => {
   try {
-    console.log('email:', req.query.email as string);
     const params = {
         email: req.query.email as string,
         stats: {

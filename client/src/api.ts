@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TrackCard } from './models/TrackCard';
 import { UserInfo } from './models/UserInfo';
+import { UserStats } from './models/UserStats';
 
 export async function getAuthToken(): Promise<{ access_token: string}> {
     const { data } = await axios({
@@ -44,4 +45,17 @@ export async function getUserInfo (): Promise<UserInfo> {
     });
 
     return data;
+}
+
+export async function updateStats (email: string, stats: UserStats): Promise<void> {
+    await axios({
+        method: 'get',
+        url: '/stats/updateStats',
+        params: {
+            email: email,
+            mistakes: stats.mistakes,
+            time: stats.time,
+            score: stats.score  
+        }
+    })
 }
