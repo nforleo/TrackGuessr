@@ -22,3 +22,18 @@ export const updateStats = async (
     return next(error);
   }
 };
+
+export const getUserStats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<unknown> => {
+  try {
+    const email = req.query.email as string;
+
+    const data = await databaseService.getUserStats(email);
+    return res.json(data);
+  } catch (error: unknown) {
+    return next(error);
+  }
+};

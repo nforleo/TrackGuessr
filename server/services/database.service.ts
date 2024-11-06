@@ -56,3 +56,13 @@ export const updateUserRecord = async (email: string, stats: UserStats): Promise
         throw new Error(`Error updating database`);
     }
 }
+
+export const getUserStats = async (email: string): Promise<UserStats | string> => {
+    const stats = await fetchUserRecord(email);
+
+    return {
+        score: stats?.score,
+        mistakes: stats?.lowest_num_mistakes,
+        time: stats?.fastest_time
+    };
+}
