@@ -10,6 +10,7 @@ import { UserStats } from '../src/models/UserStats';
 import { EndSplashScreen } from '../src/components/EndSplashScreen';
 import * as logic from '../src/components/Gameplay/utils/logic';
 import { TrackCard } from '../src/models/TrackCard';
+import { User } from '../src/models/User';
 
 describe("Verify daily game functionality", () => {
     test('When the daily game loads, the call to the backend should leave 10 songs in the unrevealed list', async () => {
@@ -110,8 +111,14 @@ describe("Verify daily game functionality", () => {
             time: 0
         };
 
+        const user: User = {
+            token: '',
+            email: '',
+            name: ''
+        }
+
         render(<MemoryRouter>
-            <EndSplashScreen stats={stats} />
+            <EndSplashScreen stats={stats} user={user}/>
         </MemoryRouter>)
 
 

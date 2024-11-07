@@ -30,6 +30,7 @@ export const Stats = ({
                     Please complete a daily game to see stats!
                 </div> : <div>
                 <Stack>
+                    <h2>Your Best Stats</h2>
                     <span>
                         Your Score: {stats.score}
                     </span>

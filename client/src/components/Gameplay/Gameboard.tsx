@@ -13,6 +13,7 @@ import { UserStats } from '../../models/UserStats';
 import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
+import { User } from '../../models/User';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -133,8 +134,8 @@ export const Gameboard = ({
 
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
-            {isFinished ? 
-            <EndSplashScreen stats={stats} /> :
+            {isFinished && !running ? 
+            <EndSplashScreen stats={stats} user={user || {} as User}/> :
             revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 

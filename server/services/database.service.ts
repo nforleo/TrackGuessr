@@ -17,7 +17,7 @@ export const updateStats = async ({
         // If existing, then compare values and maybe update
         const newStats: UserStats = {
             score: Math.max(stats.score, results.score),
-            mistakes: Math.min(stats.time, results.fastest_time),
+            mistakes: Math.min(stats.mistakes, results.lowest_num_mistakes),
             time: Math.min(stats.time, results.fastest_time)
         };
         updateUserRecord(email, newStats);
