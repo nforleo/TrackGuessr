@@ -57,7 +57,16 @@ export const updateUserRecord = async (email: string, stats: UserStats): Promise
     }
 }
 
-export const getUserStats = async (email: string): Promise<UserStats | string> => {
+export const deleteUserRecord = async (email: string): Promise<void> => {
+    const deleteQuery = `DELETE FROM stats WHERE email ='${email}'`;
+    try {
+        await pool.query(deleteQuery);
+    } catch (err: unknown) {
+        throw new Error(`Error updating database`);
+    }
+}   
+
+export const getUserStats = async (email: string): Promise<UserStats> => {
     const stats = await fetchUserRecord(email);
 
     return {

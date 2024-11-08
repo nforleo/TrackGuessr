@@ -1,147 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1729887607998" clover="3.2.0">
-  <project timestamp="1729887607998" name="All files">
-    <metrics statements="112" coveredstatements="81" conditionals="28" coveredconditionals="15" methods="17" coveredmethods="11" elements="157" coveredelements="107" complexity="0" loc="112" ncloc="112" packages="4" files="6" classes="6"/>
-    <package name="server">
-      <metrics statements="12" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="1" coveredmethods="0"/>
-      <file name="server.ts" path="/Users/nforleo/capstone/TrackGuessr/server/server.ts">
-        <metrics statements="12" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="1" coveredmethods="0"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="27" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-      </file>
-    </package>
-    <package name="server.caches">
-      <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="2" methods="5" coveredmethods="5"/>
-      <file name="daily.ts" path="/Users/nforleo/capstone/TrackGuessr/server/caches/daily.ts">
-        <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="2" methods="5" coveredmethods="5"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="14" count="1" type="stmt"/>
+<coverage generated="1731093119108" clover="3.2.0">
+  <project timestamp="1731093119108" name="All files">
+    <metrics statements="36" coveredstatements="26" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5" elements="44" coveredelements="32" complexity="0" loc="36" ncloc="36" packages="2" files="2" classes="2"/>
+    <package name="services">
+      <metrics statements="31" coveredstatements="21" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
+      <file name="database.service.ts" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\server\services\database.service.ts">
+        <metrics statements="31" coveredstatements="21" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
+        <line num="10" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="11" type="stmt"/>
-        <line num="25" count="11" type="cond" truecount="1" falsecount="1"/>
-        <line num="26" count="11" type="stmt"/>
+        <line num="16" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
-        <line num="43" count="11" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="56" count="2" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="server.routers">
-      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="authRouter.ts" path="/Users/nforleo/capstone/TrackGuessr/server/routers/authRouter.ts">
+    <package name="utils">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="database.ts" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\server\utils\database.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-      </file>
-      <file name="gameRouter.ts" path="/Users/nforleo/capstone/TrackGuessr/server/routers/gameRouter.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-      </file>
-    </package>
-    <package name="server.services">
-      <metrics statements="71" coveredstatements="43" conditionals="18" coveredconditionals="9" methods="11" coveredmethods="6"/>
-      <file name="auth.services.ts" path="/Users/nforleo/capstone/TrackGuessr/server/services/auth.services.ts">
-        <metrics statements="26" coveredstatements="6" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="60" count="1" type="stmt"/>
-        <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="93" count="1" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="95" count="0" type="stmt"/>
-      </file>
-      <file name="game.service.ts" path="/Users/nforleo/capstone/TrackGuessr/server/services/game.service.ts">
-        <metrics statements="45" coveredstatements="37" conditionals="14" coveredconditionals="9" methods="6" coveredmethods="6"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="12" type="stmt"/>
-        <line num="26" count="12" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="56" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
-        <line num="69" count="1" type="stmt"/>
-        <line num="71" count="33" type="stmt"/>
-        <line num="73" count="33" type="cond" truecount="2" falsecount="0"/>
-        <line num="74" count="11" type="stmt"/>
-        <line num="75" count="11" type="stmt"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="87" count="1" type="stmt"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="91" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="94" count="1" type="stmt"/>
-        <line num="95" count="1" type="stmt"/>
-        <line num="109" count="1" type="stmt"/>
-        <line num="110" count="1" type="stmt"/>
-        <line num="112" count="1" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="122" count="0" type="stmt"/>
-        <line num="125" count="1" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
-        <line num="129" count="1" type="stmt"/>
-        <line num="130" count="1" type="stmt"/>
-        <line num="133" count="1" type="stmt"/>
-        <line num="134" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="135" count="1" type="stmt"/>
-        <line num="138" count="1" type="stmt"/>
-        <line num="140" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="141" count="0" type="stmt"/>
-        <line num="144" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
       </file>
     </package>
   </project>

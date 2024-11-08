@@ -8,7 +8,7 @@ import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
 import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
-import { getDailyTracks, playSong } from '../../api';
+import { getDailyTracks, playSong, updateStats } from '../../api';
 import { UserStats } from '../../models/UserStats';
 import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
@@ -135,7 +135,7 @@ export const Gameboard = ({
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {isFinished && !running ? 
-            <EndSplashScreen stats={stats} user={user || {} as User}/> :
+            <EndSplashScreen stats={stats} user={user || {} as User} updateStats={updateStats}/> :
             revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 

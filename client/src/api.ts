@@ -57,7 +57,8 @@ export async function updateStats (email: string, stats: UserStats): Promise<voi
             time: stats.time,
             score: stats.score  
         }
-    })
+    });
+    console.log('done calling...');
 }
 
 export async function getUserStats (email: string): Promise<UserStats> {

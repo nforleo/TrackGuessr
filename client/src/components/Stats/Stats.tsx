@@ -5,14 +5,15 @@ import { Link } from "react-router-dom";
 import { formatTime } from "../Gameplay/utils/logic";
 import { User } from "../../models/User";
 import { useEffect, useState } from "react";
-import { getUserStats } from "../../api";
 
 interface StatsProps {
-    user: User
+    user: User;
+    getUserStats: (s: string) => Promise<UserStats>;
 }
 
 export const Stats = ({
-    user
+    user,
+    getUserStats
 }: StatsProps): JSX.Element => {
     const [stats, setStats] = useState<UserStats>({} as UserStats);
 
@@ -37,7 +38,7 @@ export const Stats = ({
                     <span>
                         Number of Mistakes: {stats.mistakes}
                     </span>
-                    <span>
+                    <span data-testid="stats-time">
                         Your Time: {formatTime(stats.time)}
                     </span>
                 </Stack>

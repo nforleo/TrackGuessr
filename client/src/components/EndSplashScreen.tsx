@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 import { formatTime } from "./Gameplay/utils/logic";
 import { User } from "../models/User";
 import { useEffect } from "react";
-import { updateStats } from "../api";
 
 interface EndSplashScreenProps {
     stats: UserStats;
-    user: User
+    user: User;
+    updateStats: (s: string, t: UserStats) => void;
 }
 
 export const EndSplashScreen = ({
     stats,
-    user
+    user,
+    updateStats
 }: EndSplashScreenProps): JSX.Element => {
 
     useEffect(() => {
