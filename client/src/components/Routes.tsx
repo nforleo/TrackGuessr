@@ -4,24 +4,25 @@ import App from '../App';
 import { Stats } from '../components/Stats/Stats';
 import { UserAtom } from '../atoms/UserAtom';
 import { useAtom } from 'jotai';
-import { getAuthToken } from '../api';
 import { useEffect } from 'react';
+import { getToken, getUser } from './LoginLogic';
+import { User } from '../models/User';
+import { getUserStats } from "../api";
 
 export const Routes = () => {
       const [user, setUser] = useAtom(UserAtom); 
 
-        const getToken = async () => {
-            const response = await getAuthToken();
-            setUser({
-                token: (response as { access_token: string}).access_token || '',
-                email: '',
-                name: ''
-            })
-        }
-
         useEffect(() => {
             console.log('Rendering Routes...');
-            getToken();
+            getToken().then((t) => {
+                getUser().then((u) => {
+                    setUser({
+                        token: t,
+                        email: u.email,
+                        name: u.display_name
+                    });
+                })
+            });
         }, []);
 
     return (
@@ -29,7 +30,7 @@ export const Routes = () => {
             <Route path="" element={<App setUser={setUser}/>} />
             <Route path="/daily" element={<Gameboard mode="daily"/>} />
             <Route path="/custom" element={<Gameboard mode="custom"/>} />
-            <Route path="/stats" element={<Stats/>} />
+            <Route path="/stats" element={<Stats user={user || {} as User} getUserStats={getUserStats}/>} />
         </Switch>
     )
 }

@@ -54,3 +54,17 @@ export const logout = async (req: Request,
     return next(error);
   }
 }
+
+export const getUserInfo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<unknown> => {
+  try {
+    const data = await authService.getUserInfo();
+
+    res.json(data);
+  } catch (error: unknown) {
+    return next(error);
+  }
+};

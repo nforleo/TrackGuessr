@@ -7,5 +7,6 @@ router.route(`/login`).get(authController.login);
 router.route(`/callback`).get(authController.callback);
 router.route(`/token`).get(authController.token)
 router.route(`/logout`).post(authController.logout);
+router.route(`/getUserInfo`).get(authController.getUserInfo);
 
 export default router;

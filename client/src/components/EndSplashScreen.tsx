@@ -3,14 +3,25 @@ import { UserStats } from "../models/UserStats"
 import { Header } from "./Header";
 import { Link } from "react-router-dom";
 import { formatTime } from "./Gameplay/utils/logic";
+import { User } from "../models/User";
+import { useEffect } from "react";
 
 interface EndSplashScreenProps {
     stats: UserStats;
+    user: User;
+    updateStats: (s: string, t: UserStats) => void;
 }
 
 export const EndSplashScreen = ({
-    stats
+    stats,
+    user,
+    updateStats
 }: EndSplashScreenProps): JSX.Element => {
+
+    useEffect(() => {
+        updateStats(user.email, stats);
+    }, [user]);
+
     return <Stack style={{ alignItems: 'center'}}>
         <Header />
         <Stack>

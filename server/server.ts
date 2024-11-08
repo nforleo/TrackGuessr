@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import authRouter from "./routers/authRouter";
 import gameRouter from './routers/gameRouter';
+import databaseRouter from './routers/databaseRouter';
 
 const port = 5000;
 
@@ -18,7 +19,8 @@ if (!spotify_client_id || !spotify_client_secret) {
 // Route requests through router
 const app = express();
 app.use('/auth', authRouter);
-app.use('/game', gameRouter)
+app.use('/game', gameRouter);
+app.use('/userstats', databaseRouter);
 
 
 /**
