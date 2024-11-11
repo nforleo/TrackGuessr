@@ -16,6 +16,7 @@ export const updateStats = async ({
     if (results) {
         // If existing, then compare values and maybe update
         const newStats: UserStats = {
+            mistakes: Math.min(stats.mistakes, results.lowest_num_mistakes),
             time: Math.min(stats.time, results.fastest_time)
         };
         updateUserRecord(email, newStats);
@@ -37,7 +38,7 @@ export const fetchUserRecord = async (email: string): Promise<DatabaseResults> =
 }
 
 export const insertUserRecord = async (email: string, stats: UserStats): Promise<void> => {
-    const insert = `INSERT INTO stats(email, fastest_time) VALUES ('${email}', ${stats.time})`;
+    const insert = `INSERT INTO stats(email, fastest_time, lowest_num_mistakes, score) VALUES ('${email}', ${stats.time}, ${stats.mistakes})`;
      try {
         await pool.query(insert);
     } catch (err: unknown) {
@@ -47,7 +48,7 @@ export const insertUserRecord = async (email: string, stats: UserStats): Promise
 }
 
 export const updateUserRecord = async (email: string, stats: UserStats): Promise<void> => {
-    const update = `UPDATE stats SET fastest_time = ${stats.time} WHERE email = '${email}'`;
+    const update = `UPDATE stats SET fastest_time = ${stats.time}, lowest_num_mistakes = ${stats.mistakes} WHERE email = '${email}'`;
     try {
         await pool.query(update);
     } catch (err: unknown) {

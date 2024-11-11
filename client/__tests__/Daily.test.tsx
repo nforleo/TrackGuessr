@@ -116,9 +116,10 @@ describe("Verify daily game functionality", () => {
             email: '',
             name: ''
         }
+        const updateStats = jest.fn();
 
         render(<MemoryRouter>
-            <EndSplashScreen stats={stats} user={user}/>
+            <EndSplashScreen updateStats={updateStats} stats={stats} user={user}/>
         </MemoryRouter>)
 
 
