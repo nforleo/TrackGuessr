@@ -107,10 +107,9 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
   );
 
   let playlist = (data as TracksResponse).items;
-  console.log("Initial Playlist length:", playlist.length);
 
+  // Get remaining tracks from playlist
   while (data.next) {
-    console.log("Getting more tracks from playlist... " + data.next);
     data = (
       await axios.get((data as TracksResponse).next as string, {
         headers: {
@@ -126,6 +125,10 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
   return selectNRandomTracks(playlist, n);
 };
 
+/**
+ * Gets the Daily Tracks from the cache
+ * @returns Track[]
+ */
 export const getDailyTracks = async (): Promise<Track[]> => {
   return dailyCache.getDailyTrack();
 };
