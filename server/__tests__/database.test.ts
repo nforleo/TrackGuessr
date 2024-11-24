@@ -110,4 +110,36 @@ describe("Test the database functionality for the statistics", () => {
         // Expect the mistakes stat to be the the lower time
         expect(results.mistakes).toBe(555);
     });
+
+    test("A higher score should be updated", async () => {
+        const statsWorst: UserStats = {
+            score: 5,
+            mistakes: 999999,
+            time: 10000
+        };
+
+        const statsBetter: UserStats = {
+            score: 9,
+            mistakes: 555,
+            time: 5000
+        };
+
+        // Save the initial mistakes Stat
+        await databaseService.updateStats({
+            email: TEST_EMAIL,
+            stats: statsWorst
+        });
+
+        // Save the second game of stats with a better number of mistakes
+        await databaseService.updateStats({
+            email: TEST_EMAIL,
+            stats: statsBetter
+        });
+
+        // Fetch the current mistakes stat from the database
+        const results = await databaseService.getUserStats(TEST_EMAIL);
+
+        // Expect the mistakes stat to be the the lower time
+        expect(results.mistakes).toBe(9);
+    });
 });
