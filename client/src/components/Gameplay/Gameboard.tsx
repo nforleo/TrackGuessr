@@ -14,6 +14,7 @@ import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWr
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
 import { User } from '../../models/User';
+import { SelectNumOfSongsModal } from './SelectNumOfSongsModal';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -37,9 +38,12 @@ export const Gameboard = ({
     const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
     const [hasLoaded, setHasLoaded] = useState<boolean>(false);
     const [isFinished, setIsFinished] = useState<boolean>(false);
-
     const [time, setTime] = useState<number>(0);
     const [running, setRunning] = useState<boolean>(false);
+
+    // Custom gamemode
+    const [showCustomModal, setShowCustomModal] = useState<boolean>(mode === 'custom');
+    const [numSongs, setNumSongs] = useState<number | undefined>(undefined);
 
     useEffect(() => {
         updateTimer(running, setTime);
@@ -56,18 +60,23 @@ export const Gameboard = ({
     }, [isFinished])
 
     useEffect(() => {
-        getDailyTracks().then((tracks) => {
-            const first = tracks.shift();
-            if (!first) {
-                console.error(`Not enough elements`);
-            } else {
-                first.revealed = true;
-                setRevealedList([first]);
-                setUnrevealedList(tracks);
-                setHasLoaded(true);
-                setRunning(true);
-            }
-        });
+        if (mode === 'daily') {
+            getDailyTracks().then((tracks) => {
+                const first = tracks.shift();
+                if (!first) {
+                    console.error(`Not enough elements`);
+                } else {
+                    first.revealed = true;
+                    setRevealedList([first]);
+                    setUnrevealedList(tracks);
+                    setHasLoaded(true);
+                    setRunning(true);
+                }
+            });
+        } 
+        // else if (mode === 'custom') {
+            
+        // }
     }, []);
 
     useEffect(() => {
@@ -243,7 +252,17 @@ export const Gameboard = ({
                     </Row>
                 </DndContext>
             </Container> 
-            : <div>Loading...</div>}
+            : <div>
+                {
+                    showCustomModal && <SelectNumOfSongsModal 
+                        show={showCustomModal} 
+                        setShow={setShowCustomModal}
+                        numSongs={numSongs}
+                        setNumSongs={setNumSongs}
+                    />
+                }
+                Loading...
+            </div>}
         </div>
     )
 }
