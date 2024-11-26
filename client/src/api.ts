@@ -28,6 +28,18 @@ export async function getDailyTracks (): Promise<TrackCard[]> {
     return data as TrackCard[];
 }
 
+export async function getCustomTracks (n: number): Promise<TrackCard[]> {
+    const { data } = await axios({
+        method: 'get',
+        url: '/game/custom',
+        params: {
+            n
+        }
+    });
+
+    return data as TrackCard[];
+}
+
 export async function playSong (uri: string): Promise<void> {
     await axios({
         method: 'put',

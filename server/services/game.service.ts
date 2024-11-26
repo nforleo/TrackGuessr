@@ -97,7 +97,6 @@ export const getNTracks = async (n: number): Promise<Track[]> => {
     {
       params: {
         fields:
-          // "tracks.next,tracks.items.track(name,uri,album(name,release_date),artists(name))",
           "next,items(track(name,uri,album(name,release_date),artists(name)))",
       },
       headers: {

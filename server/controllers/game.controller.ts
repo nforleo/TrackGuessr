@@ -14,6 +14,20 @@ export const getDailyTracks = async (
   }
 };
 
+export const getCustomTracks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<unknown> => {
+  try {
+    const numTracks = parseInt(req.query.n as string);
+    const data = await gameService.getNTracks(numTracks);
+    return res.json(data);
+  } catch (error: unknown) {
+    return next(error);
+  }
+};
+
 export const playSong = async (
   req: Request,
   res: Response,
