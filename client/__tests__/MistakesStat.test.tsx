@@ -29,9 +29,16 @@ describe('Test that the lowest number of mistakes stat is saved correctly', () =
         const getUserStats = jest.fn().mockResolvedValue({
             ...stats
         });
+        const mode = 'daily';
 
         // Save First stat
-        render(<MemoryRouter><EndSplashScreen user={user} stats={stats} updateStats={updateStats}/></MemoryRouter>)
+        render(<MemoryRouter>
+                <EndSplashScreen 
+                    user={user} 
+                    stats={stats} 
+                    updateStats={updateStats}
+                    mode={mode}/>
+        </MemoryRouter>)
 
         expect(updateStats).toHaveBeenCalled();
 

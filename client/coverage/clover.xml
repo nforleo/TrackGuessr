@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1732657578291" clover="3.2.0">
-  <project timestamp="1732657578291" name="All files">
-    <metrics statements="261" coveredstatements="134" conditionals="153" coveredconditionals="35" methods="66" coveredmethods="20" elements="480" coveredelements="189" complexity="0" loc="261" ncloc="261" packages="5" files="11" classes="11"/>
+<coverage generated="1732658530625" clover="3.2.0">
+  <project timestamp="1732658530625" name="All files">
+    <metrics statements="275" coveredstatements="157" conditionals="160" coveredconditionals="41" methods="69" coveredmethods="28" elements="504" coveredelements="226" complexity="0" loc="275" ncloc="275" packages="6" files="12" classes="12"/>
     <package name="atoms">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="UserAtom.ts" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\client\src\atoms\UserAtom.ts">
@@ -11,28 +11,28 @@
       </file>
     </package>
     <package name="components">
-      <metrics statements="16" coveredstatements="7" conditionals="1" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <metrics statements="16" coveredstatements="15" conditionals="1" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="EndSplashScreen.tsx" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\client\src\components\EndSplashScreen.tsx">
-        <metrics statements="14" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="14" coveredstatements="13" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
       </file>
       <file name="Header.tsx" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\client\src\components\Header.tsx">
-        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
       </file>
     </package>
     <package name="components.Gameplay">
@@ -236,9 +236,9 @@
       </file>
     </package>
     <package name="components.Gameplay.utils">
-      <metrics statements="70" coveredstatements="22" conditionals="58" coveredconditionals="4" methods="21" coveredmethods="3"/>
+      <metrics statements="70" coveredstatements="23" conditionals="58" coveredconditionals="4" methods="21" coveredmethods="5"/>
       <file name="logic.ts" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\client\src\components\Gameplay\utils\logic.ts">
-        <metrics statements="70" coveredstatements="22" conditionals="58" coveredconditionals="4" methods="21" coveredmethods="3"/>
+        <metrics statements="70" coveredstatements="23" conditionals="58" coveredconditionals="4" methods="21" coveredmethods="5"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
@@ -303,12 +303,32 @@
         <line num="207" count="1" type="stmt"/>
         <line num="213" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="214" count="1" type="stmt"/>
-        <line num="215" count="0" type="stmt"/>
+        <line num="215" count="1" type="stmt"/>
         <line num="217" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="218" count="1" type="stmt"/>
         <line num="221" count="2" type="stmt"/>
         <line num="224" count="1" type="stmt"/>
-        <line num="225" count="1" type="stmt"/>
+        <line num="225" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.Stats">
+      <metrics statements="14" coveredstatements="14" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="3"/>
+      <file name="Stats.tsx" path="C:\Users\nforl\OneDrive\Desktop\trckgssr\client\src\components\Stats\Stats.tsx">
+        <metrics statements="14" coveredstatements="14" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
       </file>
     </package>
   </project>
