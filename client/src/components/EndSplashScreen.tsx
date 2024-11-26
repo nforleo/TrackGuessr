@@ -10,16 +10,20 @@ interface EndSplashScreenProps {
     stats: UserStats;
     user: User;
     updateStats: (s: string, t: UserStats) => void;
+    mode: "daily" | "custom";
 }
 
 export const EndSplashScreen = ({
     stats,
     user,
-    updateStats
+    updateStats,
+    mode
 }: EndSplashScreenProps): JSX.Element => {
 
     useEffect(() => {
-        updateStats(user.email, stats);
+        if (mode === 'daily') {
+            updateStats(user.email, stats);
+        }
     }, [user]);
 
     return <Stack style={{ alignItems: 'center'}}>

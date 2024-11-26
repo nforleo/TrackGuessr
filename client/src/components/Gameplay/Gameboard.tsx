@@ -8,7 +8,7 @@ import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
 import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
-import { getDailyTracks, playSong, updateStats } from '../../api';
+import { getDailyTracks, playSong, updateStats, getCustomTracks } from '../../api';
 import { UserStats } from '../../models/UserStats';
 import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
@@ -73,11 +73,25 @@ export const Gameboard = ({
                     setRunning(true);
                 }
             });
-        } 
-        // else if (mode === 'custom') {
-            
-        // }
+        }
     }, []);
+
+    useEffect(() => {
+        if (mode === 'custom' && numSongs && !showCustomModal) {
+            getCustomTracks(numSongs).then((tracks) => {
+                const first = tracks.shift();
+                if (!first) {
+                    console.error(`Not enough elements`);
+                } else {
+                    first.revealed = true;
+                    setRevealedList([first]);
+                    setUnrevealedList(tracks);
+                    setHasLoaded(true);
+                    setRunning(true);
+                }
+            });
+        }
+    }, [showCustomModal]);
 
     useEffect(() => {
         if (user && !document.getElementById('my-spotify-player')) {
@@ -144,7 +158,7 @@ export const Gameboard = ({
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {isFinished && !running ? 
-            <EndSplashScreen stats={stats} user={user || {} as User} updateStats={updateStats}/> :
+            <EndSplashScreen stats={stats} user={user || {} as User} updateStats={updateStats} mode={mode}/> :
             revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 
