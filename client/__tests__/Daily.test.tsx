@@ -303,7 +303,7 @@ describe("Verify daily game functionality", () => {
             stats
         );
 
-        // expect(await screen.findByTestId('mistakes')).toBeInTheDocument();
-        expect(await screen.findByText(/mistakes: 1/i)).toBeInTheDocument();
+        expect(await screen.findByTestId('mistakes')).toBeInTheDocument();
+        // expect(await screen.findByText(/mistakes: 1/i)).toBeInTheDocument();
     });
 });

@@ -29,16 +29,22 @@ describe('Test that the highest score stat is saved correctly', () => {
         const getUserStats = jest.fn().mockResolvedValue({
             ...stats
         });
+        const mode = 'daily';
 
         // Save First stat
-        render(<MemoryRouter><EndSplashScreen user={user} stats={stats} updateStats={updateStats}/></MemoryRouter>)
-
+        render(<MemoryRouter>
+                <EndSplashScreen 
+                    user={user} 
+                    stats={stats} 
+                    updateStats={updateStats}
+                    mode={mode}/>
+        </MemoryRouter>);
         expect(updateStats).toHaveBeenCalled();
 
         // Load stats screen and make sure it's the same value
         render(<MemoryRouter><Stats user={user} getUserStats={getUserStats} /></MemoryRouter>)
 
         // Expect The first value to be rendered.
-        expect(await screen.findByText("Score: 5")).toBeInTheDocument();
+        expect(await screen.findByText("Your Score: 5")).toBeInTheDocument();
     });
 });

@@ -10,6 +10,8 @@ import { Gameboard } from '../src/components/Gameplay/Gameboard';
 import { Stats } from '../src/components/Stats/Stats';
 import * as api from '../src/api';
 import { act } from 'react';
+import { UserStats } from '../src/models/UserStats';
+import { User } from '../src/models/User';
 
 afterAll(cleanup);
 
@@ -131,10 +133,25 @@ describe("Verify Home screen button functions", () => {
 
     test("The stats screen is rendered", async () => {
         const setUser = jest.fn();
+         const stats: UserStats = {
+            score: 10,
+            time: 10,
+            mistakes: 10
+        };
+
+        const getUserStats = jest.fn().mockResolvedValue({
+            ...stats
+        });
+
+        const user: User = {
+            token: 'a',
+            email: 'custom@mail.com',
+            name: 'b'
+        }
         render(<MemoryRouter>
                 <Routes>
                     <Route path="" element={<Home setUser={setUser} />} />
-                    <Route path="/stats" element={<Stats />} />
+                    <Route path="/stats" element={<Stats user={user} getUserStats={getUserStats}/>} />
                 </Routes>
             </MemoryRouter>);
 
@@ -143,7 +160,7 @@ describe("Verify Home screen button functions", () => {
         userEvent.click(linkElement);
 
         // Verify if the target page is loaded by checking for the specific element
-        const targetDiv = await screen.findByTestId('stats');
+        const targetDiv = await screen.findByTestId('stats-time');
         expect(targetDiv).toBeInTheDocument();
     });
 });

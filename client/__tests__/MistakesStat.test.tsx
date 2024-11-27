@@ -38,7 +38,7 @@ describe('Test that the lowest number of mistakes stat is saved correctly', () =
                     stats={stats} 
                     updateStats={updateStats}
                     mode={mode}/>
-        </MemoryRouter>)
+        </MemoryRouter>);
 
         expect(updateStats).toHaveBeenCalled();
 
@@ -46,6 +46,7 @@ describe('Test that the lowest number of mistakes stat is saved correctly', () =
         render(<MemoryRouter><Stats user={user} getUserStats={getUserStats} /></MemoryRouter>)
 
         // Expect The first value to be rendered.
-        expect(await screen.findByText("Mistakes: 500")).toBeInTheDocument();
+        expect(await screen.findByText(`Number of Mistakes: 500`)).toBeInTheDocument();
+        // expect(await screen.findByText(`500`)).toBeInTheDocument();
     });
 });

@@ -49,6 +49,7 @@ export const insertUserRecord = async (email: string, stats: UserStats): Promise
 }
 
 export const updateUserRecord = async (email: string, stats: UserStats): Promise<void> => {
+    console.log('Updating with', { ...stats });
     const update = `UPDATE stats SET fastest_time = ${stats.time}, lowest_num_mistakes = ${stats.mistakes}, score = ${stats.score} WHERE email = '${email}'`;
     try {
         await pool.query(update);
