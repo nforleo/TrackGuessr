@@ -8,12 +8,13 @@ import { SortableItem } from './SortableItem';
 import { TrackCard } from '../../models/TrackCard';
 import { useAtomValue } from 'jotai';
 import { UserAtom } from '../../atoms/UserAtom'; 
-import { getDailyTracks, playSong, updateStats } from '../../api';
+import { getDailyTracks, playSong, updateStats, getCustomTracks } from '../../api';
 import { UserStats } from '../../models/UserStats';
 import {  formatTime, getGameplayBackgroundColor, playNextSong, resetAndRemoveWrongCard, submitGuess, updateTimer } from './utils/logic';
 import { GuessAttributesModal } from './GuessAttributesModal';
 import { EndSplashScreen } from '../EndSplashScreen';
 import { User } from '../../models/User';
+import { SelectNumOfSongsModal } from './SelectNumOfSongsModal';
 
 interface GameboardProps {
     mode: "daily" | "custom"
@@ -37,9 +38,12 @@ export const Gameboard = ({
     const [showAttributeModal, setShowAttributesModal] = useState<boolean>(false);
     const [hasLoaded, setHasLoaded] = useState<boolean>(false);
     const [isFinished, setIsFinished] = useState<boolean>(false);
-
     const [time, setTime] = useState<number>(0);
     const [running, setRunning] = useState<boolean>(false);
+
+    // Custom gamemode
+    const [showCustomModal, setShowCustomModal] = useState<boolean>(mode === 'custom');
+    const [numSongs, setNumSongs] = useState<number | undefined>(undefined);
 
     useEffect(() => {
         updateTimer(running, setTime);
@@ -56,19 +60,38 @@ export const Gameboard = ({
     }, [isFinished])
 
     useEffect(() => {
-        getDailyTracks().then((tracks) => {
-            const first = tracks.shift();
-            if (!first) {
-                console.error(`Not enough elements`);
-            } else {
-                first.revealed = true;
-                setRevealedList([first]);
-                setUnrevealedList(tracks);
-                setHasLoaded(true);
-                setRunning(true);
-            }
-        });
+        if (mode === 'daily') {
+            getDailyTracks().then((tracks) => {
+                const first = tracks.shift();
+                if (!first) {
+                    console.error(`Not enough elements`);
+                } else {
+                    first.revealed = true;
+                    setRevealedList([first]);
+                    setUnrevealedList(tracks);
+                    setHasLoaded(true);
+                    setRunning(true);
+                }
+            });
+        }
     }, []);
+
+    useEffect(() => {
+        if (mode === 'custom' && numSongs && !showCustomModal) {
+            getCustomTracks(numSongs).then((tracks) => {
+                const first = tracks.shift();
+                if (!first) {
+                    console.error(`Not enough elements`);
+                } else {
+                    first.revealed = true;
+                    setRevealedList([first]);
+                    setUnrevealedList(tracks);
+                    setHasLoaded(true);
+                    setRunning(true);
+                }
+            });
+        }
+    }, [showCustomModal]);
 
     useEffect(() => {
         if (user && !document.getElementById('my-spotify-player')) {
@@ -135,7 +158,7 @@ export const Gameboard = ({
     return (
         <div data-testid={`gameboard-${mode}`} id={`gameboard-${mode}`} className='h-100 w-100'>
             {isFinished && !running ? 
-            <EndSplashScreen stats={stats} user={user || {} as User} updateStats={updateStats}/> :
+            <EndSplashScreen stats={stats} user={user || {} as User} updateStats={updateStats} mode={mode}/> :
             revealedList.length > 0 && hasLoaded ? <Container className='pt-2 h-100'>
                 {showAttributeModal && <GuessAttributesModal 
                     setShow={setShowAttributesModal} 
@@ -243,7 +266,17 @@ export const Gameboard = ({
                     </Row>
                 </DndContext>
             </Container> 
-            : <div>Loading...</div>}
+            : <div>
+                {
+                    showCustomModal && <SelectNumOfSongsModal 
+                        show={showCustomModal} 
+                        setShow={setShowCustomModal}
+                        numSongs={numSongs}
+                        setNumSongs={setNumSongs}
+                    />
+                }
+                Loading...
+            </div>}
         </div>
     )
 }

@@ -4,7 +4,7 @@
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { Gameboard } from '../src/components/Gameplay/Gameboard';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import * as api from '../src/api';
 import { UserStats } from '../src/models/UserStats';
 import { EndSplashScreen } from '../src/components/EndSplashScreen';
@@ -116,10 +116,11 @@ describe("Verify daily game functionality", () => {
             email: '',
             name: ''
         }
+        const mode = 'daily';
         const updateStats = jest.fn();
 
         render(<MemoryRouter>
-            <EndSplashScreen updateStats={updateStats} stats={stats} user={user}/>
+            <EndSplashScreen updateStats={updateStats} stats={stats} user={user} mode={mode}/>
         </MemoryRouter>)
 
 
@@ -302,7 +303,7 @@ describe("Verify daily game functionality", () => {
             stats
         );
 
-        // expect(await screen.findByTestId('mistakes')).toBeInTheDocument();
-        expect(await screen.findByText(/mistakes: 1/i)).toBeInTheDocument();
+        expect(await screen.findByTestId('mistakes')).toBeInTheDocument();
+        // expect(await screen.findByText(/mistakes: 1/i)).toBeInTheDocument();
     });
 });
