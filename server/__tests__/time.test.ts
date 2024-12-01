@@ -54,7 +54,38 @@ describe("Test the database functionality for the statistics", () => {
 
         // Fetch the current time stat from the database
         const results = await databaseService.getUserStats(TEST_EMAIL);
-        console.log('time stats:', results);
+
+        // Expect the time stat to be the the lower time
+        expect(results.time).toBe(5000);
+    });
+
+    test("A worst time should not be updated", async () => {
+        const statsWorst: UserStats = {
+            score: -1,
+            mistakes: 999999,
+            time: 10000
+        };
+
+        const statsBetter: UserStats = {
+            score: -1,
+            mistakes: 999999,
+            time: 5000
+        };
+
+        // Save the initial Time Stat
+        await databaseService.updateStats({
+            email: TEST_EMAIL,
+            stats: statsBetter
+        });
+
+        // Save the second game of stats with a better score
+        await databaseService.updateStats({
+            email: TEST_EMAIL,
+            stats: statsWorst
+        });
+
+        // Fetch the current time stat from the database
+        const results = await databaseService.getUserStats(TEST_EMAIL);
 
         // Expect the time stat to be the the lower time
         expect(results.time).toBe(5000);
