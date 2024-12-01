@@ -19,7 +19,7 @@ export const SelectNumOfSongsModal = ({
         setNumSongs(parseInt(e.target.value));
     };
 
-    return <Modal size="sm" show={show}>
+    return <Modal size="sm" show={show} style={{ color: 'black'}}>
         <Modal.Title className="ps-1">
             Select Number of Songs
         </Modal.Title>

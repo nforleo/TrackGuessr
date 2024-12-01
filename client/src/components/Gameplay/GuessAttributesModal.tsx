@@ -62,7 +62,7 @@ export const GuessAttributesModal = ({
         });
     }
 
-    return (<Modal size="lg" show={show}>
+    return (<Modal id="attributes-modal" size="lg" show={show}>
         <Modal.Header>
             <Modal.Title>Enter Attribute</Modal.Title>
         </Modal.Header>

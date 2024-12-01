@@ -16,18 +16,23 @@ export const Stats = ({
     getUserStats
 }: StatsProps): JSX.Element => {
     const [stats, setStats] = useState<UserStats>({} as UserStats);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         getUserStats(user.email).then((s) => {
             if (s.score !== undefined) {
                 setStats(s);
             }
+            setIsLoading(false);
         });
     }, [user]);
 
     return <Stack style={{ alignItems: 'center'}}>
         <Header />
-        { stats?.score === undefined ? <div>
+        <div>
+            {isLoading ? <div>
+                Loading...
+                </div> : stats?.score === undefined ? <div>
                     Please complete a daily game to see stats!
                 </div> : <div>
                 <Stack>
@@ -42,11 +47,13 @@ export const Stats = ({
                         Your Time: {formatTime(stats.time)}
                     </span>
                 </Stack>
-                <Link style={{width: 'min-content'}} to="/" className="btn btn-primary">
-                    Home
-                </Link>
             </div>
         }
+            <Link style={{width: 'min-content'}} to="/" className="btn btn-primary">
+                    Home
+                </Link>
+        </div>
+        
     </Stack>
     
 }
